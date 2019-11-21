@@ -40,10 +40,14 @@ Example:
 
 > We chose the barley dataset from the vega-datasets python package. This dataset shows the yields of 10 different varieties of barley at 6 different sites in Minnesota during the years 1931 and 1932. It first appeared in 1934 the paper "Statistical Determination of Barley Varietal Adaption" by the three agronomists who leaded this experiment : F.R. Immer, H.K. Hayes, and L. Powers.
 This dataset contains 4 columns : `yield`, `variety`, `year` and `site`.
-The 10 varieties studied are : Velvet, Trebi, No. 457, No. 462, Peatland, No. 475, Manchuria, Glabron, Svansota, and Wisconsin No 38.
-The 6 sites studied are : University Farm, Waseca, Morris, Crookston, Grand Rapids, and Duluth.
-There are no missing data in this dataset, and all the possible combinations of variety and sites are present for the years 1931 and 1932.
-We speculate here that the yield is in kilograms per hectare.
+
+> The 10 varieties studied are : Velvet, Trebi, No. 457, No. 462, Peatland, No. 475, Manchuria, Glabron, Svansota, and Wisconsin No 38.
+
+> The 6 sites studied are : University Farm, Waseca, Morris, Crookston, Grand Rapids, and Duluth.
+
+> There are no missing data in this dataset, and all the possible combinations of variety and sites are present for the years 1931 and 1932.
+
+> We speculate here that the yield is in kilograms per hectare.
 
 
 In the above example, column names are specified using backticks. Remember if your dataset has _a lot_ of columns, stick to summaries and avoid listing out every single column. The example also differentiates columns that come with the dataset (i.e. `Age`) from new variables that you might derive for your visualizations (i.e `ProbShow`) - you should make a similar distinction in your write-up.
@@ -68,11 +72,15 @@ Given some sites and some varieties, what site had the highest yield during a sp
 Given some sites and some varieties, what is the variety of barley with the highest yield for each of the sites?
 
 > George is a farmer who just bought this land in Waseca and who already has a land in Crookston. He would like to grow barley on his two lands, but he doesn't know which variety he should use to have the highest yield. 
-He need to have the ability to [explore] the dataset so that he can [compare] the annual yield of each variety on both of his lands and [identify] which variety is the best one for him. Moreover, George knows that the way of growing each variety of barley is different. Therefore he needs to be able to [compare] if the difference of yield between 
+
+> He need to have the ability to [explore] the dataset so that he can [compare] the annual yield of each variety on both of his lands and [identify] which variety is the best one for him. Moreover, George knows that the way of growing each variety of barley is different. 
+> Therefore he needs to be able to [compare] if the difference of yield between 
 > - choosing two different varieties for each of his sites 
 > - choosing only one variety for both lands 
 
 > is worth it. Another thing that George has to consider is that he has in mind to buy a third land, but without learning how to grow another type of barley, so he needs to [compare] the yields of the varieties he already has at hand, for every site. Thanks to our app, he could [identify] in which site should be the land that he wants to buy. 
-When George uses the "BaRley app", he will see 3 graphs and a map. The 2 first graphs show the annual yield according to the site, and the annual yield according to the variety. The third graph shows different plots of the yield per variety for each site. Finally, a map will show where the selected sites are in Minnesota.
-George will have the ability to filter which year, which varieties and which sites will be represented on the graphs.
+
+> When George uses the "BaRley app", he will see 3 graphs and a map. The 2 first graphs show the annual yield according to the site, and the annual yield according to the variety. The third graph shows different plots of the yield per variety for each site. Finally, a map will show where the selected sites are in Minnesota.
+
+> George will have the ability to filter which year, which varieties and which sites will be represented on the graphs.
 Once George selected the two sites where his lands are (Waseca and Crookston), he realizes that Velvet is the variety that has the highest yield in both sites for the years 1931 and 1932. After that, he selects the Velvet variety and notices that the site that has the highest yield for this variety is Morris, so he decides to buy a new land in Morris.
