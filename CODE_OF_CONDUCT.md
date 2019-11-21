@@ -2,7 +2,7 @@
 
 ### Introduction
 
-The creators of this repository strive for a comfortable environment that facilitates collaboration and teamwork. We believe that a respectful and welcoming atmosphere allows collaborators to fully utilize their strengths to further improve the project.
+The creators of this repository strive for a comfortable environment that facilitates collaboration and teamwork. We strongly believe in promoting a diverse and inclusive environment since all kinds of individuals, of any background, can potentially contribute amazing ideas.
 
 ### Standards
 
@@ -22,10 +22,10 @@ Those who contribute to this repository agree to abide by the principles outline
 
 ### Enforcement
 
-Any instances of behavior that violate the Code of Conduct can be reported to the project maintainers through GitHub. The maintainers will then review all of the relevant complaints and ultimately, take the necessary action against the relevant contributor(s) in question. 
+Any instances of behavior that violate the Code of Conduct can be reported to the project maintainers by messaging via. email brayden.tang1@gmail.com. The maintainers will then review all of the relevant complaints and ultimately, take the necessary action against the relevant contributor(s) in question. Consequences, as mentioned earlier, include temporary or permanent bans from this repository.
 
 Note that this principle also applies to the project maintainers themselves. Maintainers will be disciplined by other project leaders.
 
 ### Attribution
 
-This Code of Conduct has been written based on the [tidyverse's](https://github.com/tidyverse/tidyverse.org/blob/master/CODE_OF_CONDUCT.md) and [Pandas'](https://github.com/pandas-dev/pandas-governance/blob/master/code-of-conduct.md) Code of Conducts. 
+This Code of Conduct has been written based on the [tidyverse's](https://github.com/tidyverse/tidyverse.org/blob/master/CODE_OF_CONDUCT.md) and [Pandas'](https://github.com/pandas-dev/pandas-governance/blob/master/code-of-conduct.md) Code of Conducts. In turn, this Code of Conduct is based on the [Contributor Covenant's](https://www.contributor-covenant.org/version/2/0/code_of_conduct.md) Code of Conduct.
