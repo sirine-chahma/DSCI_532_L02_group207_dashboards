@@ -1,31 +1,39 @@
 ## Code of Conduct
 
-### Introduction
+### Our Pledge
+In the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to make participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.
 
-The creators of this repository strive for a comfortable environment that facilitates collaboration and teamwork. We strongly believe in promoting a diverse and inclusive environment since all kinds of individuals, of any background, can potentially contribute amazing ideas.
+### Our Standards
+Examples of behavior that contributes to creating a positive environment include:
 
-### Standards
+- Using welcoming and inclusive language
+- Being respectful of differing viewpoints and experiences
+- Gracefully accepting constructive criticism
+- Focusing on what is best for the community
+- Showing empathy towards other community members
 
-As a result, collaborators to this repository agree that any behavior that is not respectful towards others is completely unacceptable. In particular, there is zero-tolerance for any derogatory comments or acts related to race, gender, sexual orientation, disabilities, knowledge, appearance, religion, or age. Threatening or aggressive comments, both in private or in public, will be removed and offenders will face a ban from contributing to this repository.
+Examples of unacceptable behavior by participants include:
 
-Furthermore, any posts that link to or display NSFW (not safe for work) content is strictly prohibited. Any other behavior that is distasteful or blatant trolling will also not be tolerated.
+- The use of sexualized language or imagery and unwelcome sexual attention or advances
+- Trolling, insulting/derogatory comments, and personal or political attacks
+- Public or private harassment
+- Publishing others’ private information, such as a physical or electronic address, without explicit permission
+- Other conduct which could reasonably be considered inappropriate in a professional setting
 
-### Responsibilities of Maintainers
+### Our Responsibilities
+Project maintainers are responsible for clarifying the standards of acceptable behavior and are expected to take appropriate and fair corrective action in response to any instances of unacceptable behavior.
 
-The maintainers of the repository have the right to remove, ignore, reject add, or edit any pull requests made by contributors that violate the Code of Conduct. If disciplinary action is required, the maintainers will strive to be as transparent as possible. 
-
-Those who continually violate the Code of Conduct, including the maintainers themselves, will face permanent bans from contributing to this repository.
+Project maintainers have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct, or to ban temporarily or permanently any contributor for other behaviors that they deem inappropriate, threatening, offensive, or harmful.
 
 ### Scope
-
-Those who contribute to this repository agree to abide by the principles outlined in the Code of Conduct in any project or public environment associated with this repository. This includes any online pages or applications related to this project (such as GitHub pull requests or issues), and offline meetings. Those who act as representatives of this project in a public environment are to abide by the Code of Conduct.
+This Code of Conduct applies within all project spaces, and it also applies when an individual is representing the project or its community in public spaces. Examples of representing a project or community include using an official project e-mail address, posting via an official social media account, or acting as an appointed representative at an online or offline event. Representation of a project may be further defined and clarified by project maintainers.
 
 ### Enforcement
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team at brayden.tang1@gmail.com. All complaints will be reviewed and investigated and will result in a response that is deemed necessary and appropriate to the circumstances. The project team is obligated to maintain confidentiality with regard to the reporter of an incident. Further details of specific enforcement policies may be posted separately.
 
-Any instances of behavior that violate the Code of Conduct can be reported to the project maintainers by messaging via. email at brayden.tang1@gmail.com. The maintainers will then review all of the relevant complaints and ultimately, take the necessary action against the relevant contributor(s) in question. Consequences, as mentioned earlier, include temporary or permanent bans from this repository.
-
-Note that this principle also applies to the project maintainers themselves. Maintainers will be disciplined by other project leaders.
+Project maintainers who do not follow or enforce the Code of Conduct in good faith may face temporary or permanent repercussions as determined by other members of the project’s leadership.
 
 ### Attribution
+This Code of Conduct is adapted from the Contributor Covenant, version 1.4, available at https://www.contributor-covenant.org/version/1/4/code-of-conduct.html
 
-This Code of Conduct has been written based on the [tidyverse's](https://github.com/tidyverse/tidyverse.org/blob/master/CODE_OF_CONDUCT.md) and [Pandas'](https://github.com/pandas-dev/pandas-governance/blob/master/code-of-conduct.md) Code of Conducts. In turn, this Code of Conduct is based on the [Contributor Covenant's](https://www.contributor-covenant.org/version/2/0/code_of_conduct.md) Code of Conduct.
+For answers to common questions about this code of conduct, see https://www.contributor-covenant.org/faq
