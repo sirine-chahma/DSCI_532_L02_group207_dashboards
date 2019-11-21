@@ -20,7 +20,6 @@ Each of the proposal sections are described below and include an example of what
 
 In a few sentences, provide some motivation for why you are creating a dashboard. What problem is could it solve? What is the "purpose" of the dashboard? Be brief and clear.
 
-Example:
 
 > Barley is part of the major cereal grains used worldwide. Understanding how the variety of barley and the site on which it grows impacts the annual yield is very important. It can help farmers to have the highest yield as possible and increase their productivity, but it can also help agronomists to have a better understanding of how the environment impacts each variety of barley. To help those farmers increase their productivity, we decided to create an app that could allow them to explore a dataset containing information on annual yields for different sites and barley varieties. This app will allow the users to see the annual yield for selected varieties and particular sites, for the years 1931, 1932, or both. It should help them understand what variety or what site is the most suitable to their situation.
 
@@ -30,17 +29,13 @@ Example:
 As mentioned in lecture, in your group of 3 or 4, you are expected to select one of your group members DSCI 531 Lab 4 assignments as a template for your dashboard. 
 This is to make sure we do not spend a lot of time looking for a new dataset and understanding it in detail.
 
-If you prefer, you can also choose to visualize your own data **IF ALL MEMBERS OF YOUR GROUP AGREE TO THIS**. Note that the purpose of this first dashboard is to get you familiar with the mechanics of building a dashboard. _If you do choose to use your own data, make sure you clear it with a TA first, and state who approved it in your writeup._ If a TA or instructor has already approved your dataset for DSCI 531 Lab 4, you do not need to get it approved again.
 
 In your proposal, briefly describe the dataset and the variables that you will visualize. Note, all data has to be publicly available since you are required to create a public repo.
 
-Please note, if your dataset has _a lot_ of columns and you plan to visualize them all, provide a high level descriptor of the variable types. For example, indicate that the dataset contains a variety of _demographic variables_ and provide a brief list rather than stating and describing every single variable. You may also want to consider visualizing a smaller set of variables given the short duration of this project.
 
-Example:
+> We chose the barley dataset from the vega-datasets python package. This dataset shows the yields of 10 different varieties of barley at 6 different sites in Minnesota during the years 1931 and 1932. It first appeared in the 1934 paper  "Statistical Determination of Barley Varietal Adaption" by the three agronomists who led this experiment: F.R. Immer, H.K. Hayes, and L. Powers.
 
-We chose the barley dataset from the vega-datasets python package. This dataset shows the yields of 10 different varieties of barley at 6 different sites in Minnesota during the years 1931 and 1932. It first appeared in the 1934 paper  "Statistical Determination of Barley Varietal Adaption" by the three agronomists who led this experiment: F.R. Immer, H.K. Hayes, and L. Powers.
-
-This dataset contains 4 columns : `yield`, `variety`, `year` and `site`.
+> This dataset contains 4 columns : `yield`, `variety`, `year` and `site`.
 
 > The 10 varieties studied are : Velvet, Trebi, No. 457, No. 462, Peatland, No. 475, Manchuria, Glabron, Svansota, and Wisconsin No 38.
 
@@ -51,9 +46,6 @@ This dataset contains 4 columns : `yield`, `variety`, `year` and `site`.
 > We speculate here that the yield is in kilograms per hectare.
 
 
-In the above example, column names are specified using backticks. Remember if your dataset has _a lot_ of columns, stick to summaries and avoid listing out every single column. The example also differentiates columns that come with the dataset (i.e. `Age`) from new variables that you might derive for your visualizations (i.e `ProbShow`) - you should make a similar distinction in your write-up.
-
-Another example of a good description of a dataset can be found [here](https://www.kaggle.com/unsdsn/world-happiness) for the World Happiness Report dataset on Kaggle.
 
 ### Section 3: Research questions and usage scenarios
 
@@ -65,7 +57,6 @@ Then, consider how the dashboard can be used to answer your research question(s)
 Usage scenarios are typically written in a narrative style and include the specific context of usage, tasks associated with that usage context, and a hypothetical walkthrough of how the user would accomplish those tasks with your app. 
 If you are using a Kaggle dataset, you may use their "Overview (inspiration)" to create your usage scenario, or you may come up with your own inspiration.
 
-An example usage scenario with tasks (tasks are indicated in brackets, i.e. [task])
 
 > Our research questions are : 
 Given some sites and some varieties, what variety of barley had the highest yield during a specific year?
