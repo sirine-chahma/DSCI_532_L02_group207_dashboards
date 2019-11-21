@@ -22,7 +22,7 @@ Those who contribute to this repository agree to abide by the principles outline
 
 ### Enforcement
 
-Any instances of behavior that violate the Code of Conduct can be reported to the project maintainers by messaging via. email brayden.tang1@gmail.com. The maintainers will then review all of the relevant complaints and ultimately, take the necessary action against the relevant contributor(s) in question. Consequences, as mentioned earlier, include temporary or permanent bans from this repository.
+Any instances of behavior that violate the Code of Conduct can be reported to the project maintainers by messaging via. email at brayden.tang1@gmail.com. The maintainers will then review all of the relevant complaints and ultimately, take the necessary action against the relevant contributor(s) in question. Consequences, as mentioned earlier, include temporary or permanent bans from this repository.
 
 Note that this principle also applies to the project maintainers themselves. Maintainers will be disciplined by other project leaders.
 
