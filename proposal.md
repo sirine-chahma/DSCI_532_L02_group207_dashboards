@@ -38,7 +38,8 @@ Please note, if your dataset has _a lot_ of columns and you plan to visualize th
 
 Example:
 
-> We chose the barley dataset from the vega-datasets python package. This dataset shows the yields of 10 different varieties of barley at 6 different sites in Minnesota during the years 1931 and 1932. It first appeared in 1934 the paper "Statistical Determination of Barley Varietal Adaption" by the three agronomists who leaded this experiment : F.R. Immer, H.K. Hayes, and L. Powers.
+We chose the barley dataset from the vega-datasets python package. This dataset shows the yields of 10 different varieties of barley at 6 different sites in Minnesota during the years 1931 and 1932. It first appeared in the 1934 paper  "Statistical Determination of Barley Varietal Adaption" by the three agronomists who led this experiment: F.R. Immer, H.K. Hayes, and L. Powers.
+
 This dataset contains 4 columns : `yield`, `variety`, `year` and `site`.
 
 > The 10 varieties studied are : Velvet, Trebi, No. 457, No. 462, Peatland, No. 475, Manchuria, Glabron, Svansota, and Wisconsin No 38.
