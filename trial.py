@@ -4,7 +4,7 @@ import dash_html_components as html
 import dash_bootstrap_components as dbc
 import altair as alt
 import vega_datasets as vega_datasets
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 
 app = dash.Dash(__name__, assets_folder='assets', external_stylesheets=[dbc.themes.BOOTSTRAP])
 df = vega_datasets.data.barley()
@@ -13,7 +13,14 @@ body = dbc.Container(
         dbc.Row(
             [
                 html.Div([
+                    
+                    dbc.Button(
+                        "Collapse Menu", color='primary', id='left', className="mr-1"
+                    ),
+
                     dbc.Col(
+                        dbc.Collapse(
+                            dbc.Card(
                         [
                             html.H1("Barley Yield History"),
                             html.H2("Filters:"),
@@ -50,23 +57,32 @@ body = dbc.Container(
                                 multi=True,
                                 style={'height': '150px', 'width': '300px', 'marginTop': 5}
                             )
-                        ],
+                        ]), id = "left-collapse"),
                 align='start')
                 ], style={'min-height': '600px', 'border': '2px lightblue solid'}),
                 dbc.Col(
                     [
                         html.Iframe(
                             sandbox='allow-scripts',
-                            id='plot1',
+                            id='yield_per_var',
                             height='1500',
                             width='700',
                             style={'border-width': '0px'}
+                        )
+                    ]),
+                dbc.Col(
+                    [
+                        html.Iframe(
+                            sandbox='allow-scripts',
+                            id='yield_per_site',
+                            height='1500',
+                            width='700',
+                            style={'border-width': '0px', 'overflowX': 'scroll'}
                         )
                     ]
                 )
             ]
         )
-
     ]
 )
 
@@ -76,7 +92,7 @@ app.title = 'Trial App of Sketch'
 app.layout = html.Div([body])
 
 @app.callback(
-    Output('plot1', 'srcDoc'),
+    Output('yield_per_var', 'srcDoc'),
     [Input('year_selector', 'value'), Input('site_selector', 'value'), Input('variety_selector', 'value')])
 def make_yield_per_var(year, site, variety):
 
@@ -105,13 +121,62 @@ def make_yield_per_var(year, site, variety):
         alt.Y("yield:Q",
             title = "Yield (kg/hectare)"),
         alt.Color("year:N", legend=alt.Legend(title="Year"))
-        ).properties(title="Yield per variety"
+        ).properties(title="Yield per variety", width = 500
         ).configure_title(fontSize=18
         ).configure_axis(
             labelFontSize=10, 
-            titleFontSize=13).properties(width = 500).interactive()
+            titleFontSize=13).interactive()
 
     return chart.to_html()
+
+@app.callback(
+    Output('yield_per_site', 'srcDoc'),
+    [Input('year_selector', 'value'), Input('site_selector', 'value'), Input('variety_selector', 'value')])
+def make_yield_per_site(year, site, variety):
+
+    if year == 'both':
+        year_temp = [1931, 1932]
+    else:
+        year_temp = [year]
+    if not isinstance(site, list):
+        site_temp = list(site)
+    else:
+        site_temp = site
+    if not isinstance(variety, list):
+        variety_temp = list(variety)
+    else:
+        variety_temp = variety
+
+    df_temp = df[df['year'].isin(year_temp)]
+    df_temp = df_temp[df_temp['site'].isin(site_temp)]
+    df_temp = df_temp[df_temp['variety'].isin(variety_temp)]
+
+    
+    chart = alt.Chart(df, width=600).mark_bar().encode(
+        alt.X("site:N", 
+            title="Site",
+            sort=alt.EncodingSortField(field="yield", op="sum", order='ascending'),
+            axis = alt.Axis(labelAngle=0)),
+        alt.Y("yield:Q",
+            title = "Yield (kg/hectare)"),
+        alt.Color("year:N", legend=alt.Legend(title="Year"))
+    ).properties(title="Yield per site", width = 500
+    ).configure_title(fontSize=18
+    ).configure_axis(
+        labelFontSize=11, 
+        titleFontSize=13)
+
+    return chart.to_html()
+
+@app.callback(
+    Output("left-collapse", "is_open"),
+    [Input("left", "n_clicks")],
+    [State("left-collapse", "is_open")],
+)
+def toggle_left(n_left, is_open):
+    if n_left:
+        return not is_open
+    return is_open
 
 if __name__ == '__main__':
     app.run_server(debug=True)
