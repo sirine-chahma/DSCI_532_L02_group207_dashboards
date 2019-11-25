@@ -59,15 +59,15 @@ body = dbc.Container(
                             )
                         ]), id = "left-collapse"),
                 align='start')
-                ], style={'min-height': '600px', 'border': '2px lightblue solid'}),
+                ], style={'min-height': '400px', 'border': '2px lightblue solid', 'overflowY': 'scroll'}),
                 dbc.Col(
                     [
                         html.Iframe(
                             sandbox='allow-scripts',
                             id='yield_per_var',
-                            height='1500',
-                            width='700',
-                            style={'border-width': '0px'}
+                            height='450',
+                            width='450',
+                            style={'border-width': '0px', 'overflowX': 'scroll'}
                         )
                     ]),
                 dbc.Col(
@@ -75,8 +75,8 @@ body = dbc.Container(
                         html.Iframe(
                             sandbox='allow-scripts',
                             id='yield_per_site',
-                            height='1500',
-                            width='700',
+                            height='450',
+                            width='450',
                             style={'border-width': '0px', 'overflowX': 'scroll'}
                         )
                     ]
@@ -117,11 +117,11 @@ def make_yield_per_var(year, site, variety):
         alt.X("variety:N", 
             title="Variety",
             sort=alt.EncodingSortField(field="yield", op="sum", order='ascending'),
-            axis = alt.Axis(labelAngle=0)),
+            axis = alt.Axis(labelAngle=45)),
         alt.Y("yield:Q",
             title = "Yield (kg/hectare)"),
         alt.Color("year:N", legend=alt.Legend(title="Year"))
-        ).properties(title="Yield per variety", width = 500
+        ).properties(title="Yield per variety", width = 400
         ).configure_title(fontSize=18
         ).configure_axis(
             labelFontSize=10, 
@@ -152,15 +152,15 @@ def make_yield_per_site(year, site, variety):
     df_temp = df_temp[df_temp['variety'].isin(variety_temp)]
 
     
-    chart = alt.Chart(df, width=600).mark_bar().encode(
+    chart = alt.Chart(df_temp, width=600).mark_bar().encode(
         alt.X("site:N", 
             title="Site",
             sort=alt.EncodingSortField(field="yield", op="sum", order='ascending'),
-            axis = alt.Axis(labelAngle=0)),
+            axis = alt.Axis(labelAngle=45)),
         alt.Y("yield:Q",
             title = "Yield (kg/hectare)"),
         alt.Color("year:N", legend=alt.Legend(title="Year"))
-    ).properties(title="Yield per site", width = 500
+    ).properties(title="Yield per site", width = 400
     ).configure_title(fontSize=18
     ).configure_axis(
         labelFontSize=11, 
