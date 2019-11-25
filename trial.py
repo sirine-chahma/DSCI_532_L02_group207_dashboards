@@ -121,7 +121,7 @@ def make_yield_per_var(year, site, variety):
         alt.Y("yield:Q",
             title = "Yield (kg/hectare)"),
         alt.Color("year:N", legend=alt.Legend(title="Year"))
-        ).properties(title="Yield per variety", width = 400
+        ).properties(title="Yield per variety", width = 300
         ).configure_title(fontSize=18
         ).configure_axis(
             labelFontSize=10, 
@@ -160,7 +160,7 @@ def make_yield_per_site(year, site, variety):
         alt.Y("yield:Q",
             title = "Yield (kg/hectare)"),
         alt.Color("year:N", legend=alt.Legend(title="Year"))
-    ).properties(title="Yield per site", width = 400
+    ).properties(title="Yield per site", width = 300
     ).configure_title(fontSize=18
     ).configure_axis(
         labelFontSize=11, 
