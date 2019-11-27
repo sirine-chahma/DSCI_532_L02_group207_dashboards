@@ -224,7 +224,7 @@ def make_map(site):
     sites_filter = sites[sites['site'].isin(site_temp)]
 
     points = alt.Chart(sites_filter).mark_circle(
-        size=40,
+        size=100,
         color='red'
     ).encode(
         x = alt.X('lat:Q', scale=alt.Scale(domain=[-100, 100]), axis=None),
