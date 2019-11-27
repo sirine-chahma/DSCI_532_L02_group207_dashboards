@@ -2,7 +2,9 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
+import plotly.graph_objects as go
 import altair as alt
+import pandas as pd
 import vega_datasets as vega_datasets
 from dash.dependencies import Input, Output, State
 
@@ -92,6 +94,16 @@ body = dbc.Container(
                             width='9000',
                             style={'border-width': '0px', 'overflowX': 'scroll'}
                         )
+                    ]),
+                dbc.Col(
+                    [
+                        html.Iframe(
+                            sandbox='allow-scripts',
+                            id='map',
+                            height='450',
+                            width='9000',
+                            style={'border-width': '0px', 'overflowX': 'scroll'}
+                        )
                     ]
                 )
             ]
@@ -144,7 +156,8 @@ def make_yield_per_var(year, site, variety):
             axis = alt.Axis(labelAngle=45)),
         alt.Y("yield:Q",
             title = "Yield (kg/hectare)"),
-        alt.Color("year:N", legend=alt.Legend(title="Year"))
+        alt.Color("year:N", legend=alt.Legend(title="Year")),
+        tooltip=['site', 'year', 'yield', 'variety']
         ).properties(title="Yield per variety", width = 300
         ).configure_title(fontSize=18
         ).configure_axis(
@@ -195,7 +208,8 @@ def make_yield_per_site(year, site, variety):
             axis = alt.Axis(labelAngle=45)),
         alt.Y("yield:Q",
             title = "Yield (kg/hectare)"),
-        alt.Color("year:N", legend=alt.Legend(title="Year"))
+        alt.Color("year:N", legend=alt.Legend(title="Year")),
+        tooltip=['site', 'year', 'yield', 'variety']
     ).properties(title="Yield per site", width = 300
     ).configure_title(fontSize=18
     ).configure_axis(
@@ -203,6 +217,45 @@ def make_yield_per_site(year, site, variety):
         titleFontSize=13)
 
 
+
+    return chart.to_html()
+
+@app.callback(
+    Output('map', 'srcDoc'),
+    [Input('site_selector', 'value')])
+def make_map(site):
+
+    if not isinstance(site, list):
+        site_temp = list(site)
+    else:
+        site_temp = site
+
+    states = alt.topo_feature(vega_datasets.data.us_10m.url, feature='states')
+
+    background = alt.Chart(states).mark_geoshape(
+        fill='lightgray',
+        stroke='blue'
+    ).properties(
+        width=500,
+        height=300
+    ).transform_filter((alt.datum.id == 27))
+
+    sites = pd.DataFrame({'site': df['site'].unique().tolist(),
+                      'lat': [10, 0, -38, -43, 10, 18],
+                      'long': [-40, -70, -30, 50, 30, 10]})
+
+    sites_filter = sites[sites['site'].isin(site_temp)]
+
+    points = alt.Chart(sites_filter).mark_circle(
+        size=40,
+        color='red'
+    ).encode(
+        x = alt.X('lat:Q', scale=alt.Scale(domain=[-100, 100]), axis=None),
+        y = alt.Y('long:Q', scale=alt.Scale(domain=[-100, 100]), axis=None),
+        tooltip = ['site']
+    )
+
+    chart = (background + points).properties(title="Location of Sites Selected")
 
     return chart.to_html()
 
