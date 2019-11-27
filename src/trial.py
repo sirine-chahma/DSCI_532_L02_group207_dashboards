@@ -94,6 +94,16 @@ body = dbc.Container(
                             width='9000',
                             style={'border-width': '0px', 'overflowX': 'scroll'}
                         )
+                    ]),
+                dbc.Col(
+                    [
+                        html.Iframe(
+                            sandbox='allow-scripts',
+                            id='map',
+                            height='450',
+                            width='9000',
+                            style={'border-width': '0px', 'overflowX': 'scroll'}
+                        )
                     ]
                 )
             ]
