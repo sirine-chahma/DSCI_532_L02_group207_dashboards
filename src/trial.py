@@ -119,25 +119,36 @@ app.layout = html.Div([body])
 @app.callback(
     Output('yield_per_var', 'srcDoc'),
     [Input('year_selector', 'value'), Input('site_selector', 'value'), Input('variety_selector', 'value')])
+
+#create the plot of the yield per variety
 def make_yield_per_var(year, site, variety):
 
+    #create a list with the selected year(s)
     if year == 'both':
         year_temp = [1931, 1932]
     else:
         year_temp = [year]
+    
+    #create a list with the selected site(s)
     if not isinstance(site, list):
         site_temp = list(site)
     else:
         site_temp = site
+    
+    #create a list with the selected varieties
     if not isinstance(variety, list):
         variety_temp = list(variety)
     else:
         variety_temp = variety
 
+    #filter the year
     df_temp = df[df['year'].isin(year_temp)]
+    #filter the site
     df_temp = df_temp[df_temp['site'].isin(site_temp)]
+    #filter the variety
     df_temp = df_temp[df_temp['variety'].isin(variety_temp)]
 
+    #create the bar graph
     chart = alt.Chart(df_temp).mark_bar().encode(
         alt.X("variety:N", 
             title="Variety",
@@ -158,26 +169,38 @@ def make_yield_per_var(year, site, variety):
 @app.callback(
     Output('yield_per_site', 'srcDoc'),
     [Input('year_selector', 'value'), Input('site_selector', 'value'), Input('variety_selector', 'value')])
+
+#create the plot of the yield per site
 def make_yield_per_site(year, site, variety):
 
+    #create a list with the selected year(s)
     if year == 'both':
         year_temp = [1931, 1932]
     else:
         year_temp = [year]
+
+    #create a list with the selected site(s)
     if not isinstance(site, list):
         site_temp = list(site)
     else:
         site_temp = site
+    
+    #create a list with the selected varieties
     if not isinstance(variety, list):
         variety_temp = list(variety)
     else:
         variety_temp = variety
 
+    #filter the year
     df_temp = df[df['year'].isin(year_temp)]
+
+    #filter the site
     df_temp = df_temp[df_temp['site'].isin(site_temp)]
+
+    #filter the variety
     df_temp = df_temp[df_temp['variety'].isin(variety_temp)]
 
-    
+    #create the bar graph
     chart = alt.Chart(df_temp, width=600).mark_bar().encode(
         alt.X("site:N", 
             title="Site",
@@ -251,39 +274,51 @@ def toggle_left(n_left, is_open):
     [Input('year_selector', 'value'), 
     Input('site_selector', 'value'), 
     Input('variety_selector', 'value')])
+
+#create the faceted chart of the yield per variety for every site
 def make_yield_per_site_per_variety(year, site, variety):
+
+    #create a list with the selected year(s)
     if year == 'both':
         year_temp = [1931, 1932]
     else:
         year_temp = [year]
 
+    #create a list with the selected site(s)
     if not isinstance(site, list):
         site_temp = list(site)
     else:
         site_temp = site
 
+    #create a list with the selected varieties
     if not isinstance(variety, list):
         variety_temp = list(variety)
     else:
         variety_temp = variety
     
+    #filter the year
     df_temp = df[df['year'].isin(year_temp)]
+
+    #filter the variety
     df_temp = df_temp[df_temp['variety'].isin(variety_temp)]
 
+    #my_graphs is a list that will contain all the different bar graphs that will be faceted
     my_graphs = []
 
     for sites in site_temp:
+        #filter the site
         df_temp_site = df_temp[df_temp['site'] == sites]
-
+        #create a data frame to find the maximum value of the yield
         df_max = (df_temp_site.drop(columns=['year'])
                          .groupby(['variety', 'site'])
                          .agg('sum')
                          .sort_values('yield', ascending=False)
                          .reset_index()
                  )
-
+        #my_max is the variety that had the highest yield
         my_max = df_max['variety'][0]
 
+        #create the bar graph
         chart = alt.Chart(df_max, width=600).mark_bar().encode(
         alt.X("variety:N", 
             title= sites,
@@ -291,6 +326,7 @@ def make_yield_per_site_per_variety(year, site, variety):
             axis = alt.Axis(labelAngle=45)),
         alt.Y("yield:Q",
             title = "Yield (kg/hectare)"),
+        #set the color of the maximum as orange
         color=alt.condition(
             alt.datum.variety == my_max, 
             alt.value('orange'),     
@@ -298,9 +334,10 @@ def make_yield_per_site_per_variety(year, site, variety):
         tooltip=['site', 'yield', 'variety']
         ).interactive()
 
-
+        #add this chart to the list that contains all the charts
         my_graphs.append(chart)
     
+    #change the way all the charts will be displayed regarding to the number of charts
     if len(my_graphs) == 1:
         my_chart = my_graphs[0]
         my_chart = my_chart.configure_title(fontSize=18
