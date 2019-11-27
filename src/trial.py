@@ -7,7 +7,9 @@ import vega_datasets as vega_datasets
 from dash.dependencies import Input, Output, State
 
 app = dash.Dash(__name__, assets_folder='assets', external_stylesheets=[dbc.themes.BOOTSTRAP])
+
 df = vega_datasets.data.barley()
+
 body = dbc.Container(
     [
         dbc.Row(
@@ -77,6 +79,17 @@ body = dbc.Container(
                             id='yield_per_site',
                             height='450',
                             width='450',
+                            style={'border-width': '0px', 'overflowX': 'scroll'}
+                        )
+                    ]
+                ),
+                dbc.Col(
+                    [
+                        html.Iframe(
+                            sandbox='allow-scripts',
+                            id='yield_per_site_per_variety',
+                            height='450',
+                            width='9000',
                             style={'border-width': '0px', 'overflowX': 'scroll'}
                         )
                     ]
@@ -166,6 +179,8 @@ def make_yield_per_site(year, site, variety):
         labelFontSize=11, 
         titleFontSize=13)
 
+
+
     return chart.to_html()
 
 @app.callback(
@@ -177,6 +192,109 @@ def toggle_left(n_left, is_open):
     if n_left:
         return not is_open
     return is_open
+
+@app.callback(
+    Output('yield_per_site_per_variety', 'srcDoc'),
+    [Input('year_selector', 'value'), 
+    Input('site_selector', 'value'), 
+    Input('variety_selector', 'value')])
+def make_yield_per_site_per_variety(year, site, variety):
+    if year == 'both':
+        year_temp = [1931, 1932]
+    else:
+        year_temp = [year]
+
+    if not isinstance(site, list):
+        site_temp = list(site)
+    else:
+        site_temp = site
+
+    if not isinstance(variety, list):
+        variety_temp = list(variety)
+    else:
+        variety_temp = variety
+    
+    df_temp = df[df['year'].isin(year_temp)]
+    df_temp = df_temp[df_temp['variety'].isin(variety_temp)]
+
+    my_graphs = []
+
+    for sites in site_temp:
+        df_temp_site = df_temp[df_temp['site'] == sites]
+
+        df_max = (df_temp_site.drop(columns=['year'])
+                         .groupby(['variety', 'site'])
+                         .agg('sum')
+                         .sort_values('yield', ascending=False)
+                         .reset_index()
+                 )
+
+        my_max = df_max['variety'][0]
+
+        chart = alt.Chart(df_max, width=600).mark_bar().encode(
+        alt.X("variety:N", 
+            title= sites,
+            sort=alt.EncodingSortField(field="yield", op="sum", order='ascending'),
+            axis = alt.Axis(labelAngle=45)),
+        alt.Y("yield:Q",
+            title = "Yield (kg/hectare)"),
+        color=alt.condition(
+            alt.datum.variety == my_max, 
+            alt.value('orange'),     
+            alt.value('steelblue')),
+        tooltip=['site', 'yield', 'variety']
+        ).interactive()
+
+
+        my_graphs.append(chart)
+    
+    if len(my_graphs) == 1:
+        my_chart = my_graphs[0]
+        my_chart = my_chart.configure_title(fontSize=18
+        ).configure_axis(
+        labelFontSize=10, 
+        titleFontSize=12
+        ).properties(title = "Yields for the selected varieties for the selected sites").configure_title(fontSize=25)
+    elif len(my_graphs) == 2:
+        my_chart = alt.hconcat(my_graphs[0], my_graphs[1]).configure_title(fontSize=18
+        ).configure_axis(
+        labelFontSize=10, 
+        titleFontSize=12
+        ).properties(title = "Yields for the selected varieties for the selected sites").configure_title(fontSize=25)
+    elif len(my_graphs) == 3:
+        my_chart = alt.hconcat(my_graphs[0], my_graphs[1], my_graphs[2]).configure_title(fontSize=18
+        ).configure_axis(
+        labelFontSize=10, 
+        titleFontSize=12
+        ).properties(title = "Yields for the selected varieties for the selected sites").configure_title(fontSize=25)
+    elif len(my_graphs) == 4:
+        my_chart = alt.vconcat(alt.hconcat(my_graphs[0], my_graphs[1]), 
+                              alt.hconcat(my_graphs[2], my_graphs[3])
+        ).configure_title(fontSize=18
+        ).configure_axis(
+        labelFontSize=10, 
+        titleFontSize=12
+        ).properties(title = "Yields for the selected varieties for the selected sites").configure_title(fontSize=25)
+    elif len(my_graphs) == 5:
+        my_chart = alt.vconcat(alt.hconcat(my_graphs[0], my_graphs[1], my_graphs[2]), 
+                              alt.hconcat(my_graphs[3], my_graphs[4])
+        ).configure_title(fontSize=18
+        ).configure_axis(
+        labelFontSize=10, 
+        titleFontSize=12
+        ).properties(title = "Yields for the selected varieties for the selected sites").configure_title(fontSize=25)
+    elif len(my_graphs) == 6:
+        my_chart = alt.vconcat(alt.hconcat(my_graphs[0], my_graphs[1], my_graphs[2]), 
+                              alt.hconcat(my_graphs[3], my_graphs[4], my_graphs[5])
+        ).configure_title(fontSize=18
+        ).configure_axis(
+        labelFontSize=10, 
+        titleFontSize=12
+        ).properties(title = "Yields for the selected varieties for the selected sites").configure_title(fontSize=25)
+    else : 
+        my_chart = alt.Chart()
+
+    return my_chart.to_html()
 
 if __name__ == '__main__':
     app.run_server(debug=True)
