@@ -179,6 +179,8 @@ def make_yield_per_site(year, site, variety):
         labelFontSize=11, 
         titleFontSize=13)
 
+
+
     return chart.to_html()
 
 @app.callback(
@@ -221,7 +223,7 @@ def make_yield_per_site_per_variety(year, site, variety):
         df_temp_site = df_temp[df_temp['site'] == sites]
 
         df_max = (df_temp_site.drop(columns=['year'])
-                         .groupby('variety')
+                         .groupby(['variety', 'site'])
                          .agg('sum')
                          .sort_values('yield', ascending=False)
                          .reset_index()
@@ -229,7 +231,7 @@ def make_yield_per_site_per_variety(year, site, variety):
 
         my_max = df_max['variety'][0]
 
-        chart = alt.Chart(df_temp_site, width=600).mark_bar().encode(
+        chart = alt.Chart(df_max, width=600).mark_bar().encode(
         alt.X("variety:N", 
             title= sites,
             sort=alt.EncodingSortField(field="yield", op="sum", order='ascending'),
@@ -240,8 +242,9 @@ def make_yield_per_site_per_variety(year, site, variety):
             alt.datum.variety == my_max, 
             alt.value('orange'),     
             alt.value('steelblue')),
-        tooltip=['site', 'yield', 'variety', 'year']
+        tooltip=['site', 'yield', 'variety']
         ).interactive()
+
 
         my_graphs.append(chart)
     
