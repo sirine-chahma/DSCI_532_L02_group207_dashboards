@@ -143,7 +143,7 @@ _body = dbc.Container(
             [
                 dbc.Col(
                     [
-                        html.Center(html.H2("Yield vs Variety")),
+                        html.Center(html.H2("Yield per Variety")),
                         html.Iframe(
                             sandbox='allow-scripts',
                             id='plot1',
@@ -161,7 +161,7 @@ _body = dbc.Container(
                 ),
                 dbc.Col(
                     [
-                        html.Center(html.H2("Graph 2")),
+                        html.Center(html.H2("Yield per Site")),
                         html.Iframe(
                             sandbox='allow-scripts',
                             id='plot2',
@@ -188,12 +188,12 @@ _body = dbc.Container(
             [
                 dbc.Col(
                     [
-                        html.Center(html.H2("Graph 3")),
+                        html.Center(html.H2("Yields for the selected varieties for the selected sites")),
                         html.Iframe(
                             sandbox='allow-scripts',
                             id='plot3',
-                            height='500',
-                            width='500',
+                            height='1000',
+                            width='1000',
                             style={'border-width': '0'},
                             ################ The magic happens here
                             #srcDoc=open('./Lecture1_charts/horsepower_vs_displacement.html').read()
@@ -273,7 +273,7 @@ def make_yield_per_var(year, site, variety):
             title = "Yield (kg/hectare)"),
         alt.Color("year:N", legend=alt.Legend(title="Year")),
         tooltip=['site', 'year', 'yield', 'variety']
-        ).properties(title="Yield per variety", width = 350, height=300
+        ).properties(width = 350, height=300
         ).configure_title(fontSize=18
         ).configure_axis(
             labelFontSize=10, 
@@ -324,7 +324,7 @@ def make_yield_per_site(year, site, variety):
             title = "Yield (kg/hectare)"),
         alt.Color("year:N", legend=alt.Legend(title="Year")),
         tooltip=['site', 'year', 'yield', 'variety']
-    ).properties(title="Yield per site", width = 350, height=300
+    ).properties(width = 350, height=300
     ).configure_title(fontSize=18
     ).configure_axis(
         labelFontSize=11, 
@@ -379,7 +379,7 @@ def make_yield_per_site_per_variety(year, site, variety):
         my_max = df_max['variety'][0]
 
         #create the bar graph
-        chart = alt.Chart(df_max, width=600).mark_bar().encode(
+        chart = alt.Chart(df_max).mark_bar().encode(
         alt.X("variety:N", 
             title= sites,
             sort=alt.EncodingSortField(field="yield", op="sum", order='ascending'),
@@ -392,7 +392,7 @@ def make_yield_per_site_per_variety(year, site, variety):
             alt.value('orange'),     
             alt.value('steelblue')),
         tooltip=['site', 'yield', 'variety']
-        ).interactive()
+        ).properties(width = 250, height=200).interactive()
 
         #add this chart to the list that contains all the charts
         my_graphs.append(chart)
@@ -404,7 +404,7 @@ def make_yield_per_site_per_variety(year, site, variety):
         ).configure_axis(
         labelFontSize=10, 
         titleFontSize=12
-        ).properties(title = "Yields for the selected varieties for the selected sites").configure_title(fontSize=25)
+        ).configure_title(fontSize=25)
     elif len(my_graphs) == 2:
         my_chart = alt.hconcat(my_graphs[0], my_graphs[1]).configure_title(fontSize=18
         ).configure_axis(
