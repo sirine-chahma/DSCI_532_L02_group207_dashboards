@@ -328,7 +328,7 @@ def make_yield_per_site(year, site, variety):
     ).configure_title(fontSize=18
     ).configure_axis(
         labelFontSize=11, 
-        titleFontSize=13)
+        titleFontSize=13).interactive()
     
     return chart.to_html()
 
@@ -365,37 +365,39 @@ def make_yield_per_site_per_variety(year, site, variety):
     #my_graphs is a list that will contain all the different bar graphs that will be faceted
     my_graphs = []
 
-    for sites in site_temp:
-        #filter the site
-        df_temp_site = df_temp[df_temp['site'] == sites]
-        #create a data frame to find the maximum value of the yield
-        df_max = (df_temp_site.drop(columns=['year'])
-                         .groupby(['variety', 'site'])
-                         .agg('sum')
-                         .sort_values('yield', ascending=False)
-                         .reset_index()
-                 )
-        #my_max is the variety that had the highest yield
-        my_max = df_max['variety'][0]
+    if df_temp.empty == False : 
+        for sites in site_temp:
+            #filter the site
+            df_temp_site = df_temp[df_temp['site'] == sites]
+            #create a data frame to find the maximum value of the yield
+            df_max = (df_temp_site.drop(columns=['year'])
+                            .groupby(['variety', 'site'])
+                            .agg('sum')
+                            .sort_values('yield', ascending=False)
+                            .reset_index()
+                    )
+            #my_max is the variety that had the highest yield
 
-        #create the bar graph
-        chart = alt.Chart(df_max).mark_bar().encode(
-        alt.X("variety:N", 
-            title= sites,
-            sort=alt.EncodingSortField(field="yield", op="sum", order='ascending'),
-            axis = alt.Axis(labelAngle=45)),
-        alt.Y("yield:Q",
-            title = "Yield (kg/hectare)"),
-        #set the color of the maximum as orange
-        color=alt.condition(
-            alt.datum.variety == my_max, 
-            alt.value('orange'),     
-            alt.value('steelblue')),
-        tooltip=['site', 'yield', 'variety']
-        ).properties(width = 250, height=200).interactive()
+            my_max = df_max['variety'][0]
 
-        #add this chart to the list that contains all the charts
-        my_graphs.append(chart)
+            #create the bar graph
+            chart = alt.Chart(df_max).mark_bar().encode(
+            alt.X("variety:N", 
+                title= sites,
+                sort=alt.EncodingSortField(field="yield", op="sum", order='ascending'),
+                axis = alt.Axis(labelAngle=45)),
+            alt.Y("yield:Q",
+                title = "Yield (kg/hectare)"),
+            #set the color of the maximum as orange
+            color=alt.condition(
+                alt.datum.variety == my_max, 
+                alt.value('red'),     
+                alt.value('grey')),
+            tooltip=['site', 'yield', 'variety']
+            ).properties(width = 250, height=200).interactive()
+
+            #add this chart to the list that contains all the charts
+            my_graphs.append(chart)
     
     #change the way all the charts will be displayed regarding to the number of charts
     if len(my_graphs) == 1:
@@ -410,13 +412,13 @@ def make_yield_per_site_per_variety(year, site, variety):
         ).configure_axis(
         labelFontSize=10, 
         titleFontSize=12
-        ).properties(title = "Yields for the selected varieties for the selected sites").configure_title(fontSize=25)
+        )
     elif len(my_graphs) == 3:
         my_chart = alt.hconcat(my_graphs[0], my_graphs[1], my_graphs[2]).configure_title(fontSize=18
         ).configure_axis(
         labelFontSize=10, 
         titleFontSize=12
-        ).properties(title = "Yields for the selected varieties for the selected sites").configure_title(fontSize=25)
+        )
     elif len(my_graphs) == 4:
         my_chart = alt.vconcat(alt.hconcat(my_graphs[0], my_graphs[1]), 
                               alt.hconcat(my_graphs[2], my_graphs[3])
@@ -424,7 +426,7 @@ def make_yield_per_site_per_variety(year, site, variety):
         ).configure_axis(
         labelFontSize=10, 
         titleFontSize=12
-        ).properties(title = "Yields for the selected varieties for the selected sites").configure_title(fontSize=25)
+        )
     elif len(my_graphs) == 5:
         my_chart = alt.vconcat(alt.hconcat(my_graphs[0], my_graphs[1], my_graphs[2]), 
                               alt.hconcat(my_graphs[3], my_graphs[4])
@@ -432,7 +434,7 @@ def make_yield_per_site_per_variety(year, site, variety):
         ).configure_axis(
         labelFontSize=10, 
         titleFontSize=12
-        ).properties(title = "Yields for the selected varieties for the selected sites").configure_title(fontSize=25)
+        )
     elif len(my_graphs) == 6:
         my_chart = alt.vconcat(alt.hconcat(my_graphs[0], my_graphs[1], my_graphs[2]), 
                               alt.hconcat(my_graphs[3], my_graphs[4], my_graphs[5])
@@ -440,9 +442,9 @@ def make_yield_per_site_per_variety(year, site, variety):
         ).configure_axis(
         labelFontSize=10, 
         titleFontSize=12
-        ).properties(title = "Yields for the selected varieties for the selected sites").configure_title(fontSize=25)
+        )
     else : 
-        my_chart = alt.Chart()
+        my_chart = alt.Chart(df_temp).mark_bar()
 
     return my_chart.to_html()
 
