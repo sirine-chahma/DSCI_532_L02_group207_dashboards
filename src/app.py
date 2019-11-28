@@ -328,7 +328,7 @@ def make_yield_per_site(year, site, variety):
     ).configure_title(fontSize=18
     ).configure_axis(
         labelFontSize=11, 
-        titleFontSize=13)
+        titleFontSize=13).interactive()
     
     return chart.to_html()
 
@@ -391,8 +391,8 @@ def make_yield_per_site_per_variety(year, site, variety):
             #set the color of the maximum as orange
             color=alt.condition(
                 alt.datum.variety == my_max, 
-                alt.value('orange'),     
-                alt.value('steelblue')),
+                alt.value('red'),     
+                alt.value('grey')),
             tooltip=['site', 'yield', 'variety']
             ).properties(width = 250, height=200).interactive()
 
