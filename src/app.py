@@ -37,7 +37,7 @@ SIDEBAR_STYLE_LEFT = {
     "top": 0,
     "left": 0,
     "bottom": 0,
-    "width": "20rem",
+    "width": "15rem",
     "padding": "2rem 1rem",
     #"background-color": "#f8f9fa",
     "background-color": '#343A40', 
@@ -71,17 +71,15 @@ CONTENT_STYLE = {
 
 _sidebar_left = dbc.Container(
     [
-        html.Br(),
-        html.Br(),
         
-        html.H2("Barley Yield", className="display-4"),
-        html.Hr(),
-        html.P(
-            "Choose the filters to see the visualization change", className="lead"
-        ),
-        html.Hr(),
+        
+        html.H4("Barley Yield", className="display-10"),
+        html.Br(),
+        # html.P(
+        #     "Choose the filters to see the visualization change", className="lead"
+        # ),
         html.H5("Year:"),
-        dcc.RadioItems(
+        dcc.Dropdown(
             id='year_selector',
             options=[
                 {'label': '1931', 'value': '1931'},
@@ -89,11 +87,12 @@ _sidebar_left = dbc.Container(
                 {'label': 'All', 'value': 'both'}
             ],
             value='both',
-            className="display-6"
+            style={
+                "color": 'black'
+            },
+            className="display-10"
         ),
-        html.Hr(),
-        html.Br(),
-        html.H5("Site:"),
+        html.H5("Site:", className="lead"),
         dcc.Dropdown(
             id='site_selector',
             options=[
@@ -105,7 +104,6 @@ _sidebar_left = dbc.Container(
                 "color": 'black'
             },
         ),
-        html.Hr(),
         html.Br(),
         html.H5("Variety:"),
         dcc.Dropdown(
@@ -143,12 +141,18 @@ _body = dbc.Container(
             [
                 dbc.Col(
                     [
+                        html.H2("")
+                    ],
+                    md=2
+                ),
+                dbc.Col(
+                    [
                         html.Center(html.H2("Yield per Variety")),
                         html.Iframe(
                             sandbox='allow-scripts',
                             id='plot1',
-                            height='500',
-                            width='500',
+                            height='400',
+                            width='400',
                             style={'border-width': '0'},
                             ################ The magic happens here
                             #srcDoc=open('./Lecture1_charts/horsepower_vs_displacement.html').read()
@@ -157,7 +161,7 @@ _body = dbc.Container(
                             ################ The magic happens here
                         ),                  
                     ],
-                    md=6,
+                    md=5,
                 ),
                 dbc.Col(
                     [
@@ -165,8 +169,8 @@ _body = dbc.Container(
                         html.Iframe(
                             sandbox='allow-scripts',
                             id='plot2',
-                            height='500',
-                            width='500',
+                            height='400',
+                            width='400',
                             style={'border-width': '0'},
                             ################ The magic happens here
                             #srcDoc=open('./Lecture1_charts/horsepower_vs_displacement.html').read()
@@ -174,7 +178,7 @@ _body = dbc.Container(
                             ################ The magic happens here
                         ),                  
                     ],
-                    md=6
+                    md=5
                 ),
             ]
         ),
@@ -186,6 +190,12 @@ _body = dbc.Container(
         html.Br(),
         dbc.Row(
             [
+                dbc.Col(
+                    [
+                        html.H2("")
+                    ],
+                    md=2
+                ),
                 dbc.Col(
                     [
                         html.Center(html.H2("Yields for the selected varieties for the selected sites")),
@@ -202,7 +212,7 @@ _body = dbc.Container(
                         ),              
                         
                     ],
-                    md=12
+                    md=10
                 ),
             ]
 
@@ -213,7 +223,7 @@ _body = dbc.Container(
 
 #_layout = html.Div([_dashboard, _sidebar_left, _body, _sidebar_right])
 
-_layout = html.Div([_sidebar_left, _body, _sidebar_right])
+_layout = html.Div([_sidebar_left, _body])
 
 class DemoLayoutPage:
     def for_path(self, component):
@@ -382,11 +392,11 @@ def make_yield_per_site_per_variety(year, site, variety):
 
             #create the bar graph
             chart = alt.Chart(df_max).mark_bar().encode(
-            alt.X("variety:N", 
+            alt.Y("variety:N", 
                 title= sites,
                 sort=alt.EncodingSortField(field="yield", op="sum", order='ascending'),
-                axis = alt.Axis(labelAngle=45)),
-            alt.Y("yield:Q",
+                axis = alt.Axis(labelAngle=0)),
+            alt.X("yield:Q",
                 title = "Yield (kg/hectare)"),
             #set the color of the maximum as orange
             color=alt.condition(
@@ -394,7 +404,7 @@ def make_yield_per_site_per_variety(year, site, variety):
                 alt.value('red'),     
                 alt.value('grey')),
             tooltip=['site', 'yield', 'variety']
-            ).properties(width = 250, height=200).interactive()
+            ).properties(width = 200, height=230).interactive()
 
             #add this chart to the list that contains all the charts
             my_graphs.append(chart)
@@ -403,7 +413,7 @@ def make_yield_per_site_per_variety(year, site, variety):
     if len(my_graphs) == 1:
         my_chart = my_graphs[0]
         my_chart = my_chart.configure_title(fontSize=18
-        ).configure_axis(
+        ).configure_axis(   
         labelFontSize=10, 
         titleFontSize=12
         ).configure_title(fontSize=25)
