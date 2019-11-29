@@ -4,6 +4,7 @@ import dash_bootstrap_components as dbc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 import altair as alt
+import pandas as pd
 
 from vega_datasets import data
 
@@ -92,6 +93,25 @@ _body = dbc.Container(
     [
         dbc.Row(
             [
+                dbc.Col([],md=3),
+                dbc.Col(
+                    [
+                        html.Center(html.H2("Location of Sites Selected")),
+                        html.Iframe(
+                            sandbox='allow-scripts',
+                            id='map',
+                            height='400',
+                            width='1000',
+                            style={'border-width': '0'},
+                        )
+                    ],
+                    md=6,
+                ),
+                dbc.Col([],md=3),
+            ]
+        ),
+        dbc.Row(
+            [
                 dbc.Col(
                     [
                         html.Center(html.H2("Yield per Variety")),
@@ -122,15 +142,12 @@ _body = dbc.Container(
         ),
         html.Br(),
         html.Br(),
-        html.Br(),
-        html.Br(),
-        html.Br(),
-        html.Br(),
         dbc.Row(
             [
                 dbc.Col(
                     [
                         html.Center(html.H2("Yields for the selected varieties for the selected sites")),
+                        html.Center(html.P("Max yield is represented by red", className="lead")),
                         html.Iframe(
                             sandbox='allow-scripts',
                             id='plot3',
@@ -149,6 +166,45 @@ _body = dbc.Container(
     className="mt-4",
     style=BODY
 )
+
+@app.callback(
+    Output('map', 'srcDoc'),
+    [Input('site_selector', 'value')])
+def make_map(site):
+
+    if not isinstance(site, list):
+        site_temp = list(site)
+    else:
+        site_temp = site
+
+    #states = alt.topo_feature(vega_datasets.data.us_10m.url, feature='states')
+    states = alt.topo_feature(data.us_10m.url, feature='states')
+    background = alt.Chart(states).mark_geoshape(
+        fill='lightgray',
+        stroke='blue'
+    ).properties(
+        width=500,
+        height=300
+    ).transform_filter((alt.datum.id == 27))
+
+    sites = pd.DataFrame({'site': barley_df['site'].unique().tolist(),
+                      'lat': [10, 0, -38, -43, 10, 18],
+                      'long': [-40, -70, -30, 50, 30, 10]})
+
+    sites_filter = sites[sites['site'].isin(site_temp)]
+
+    points = alt.Chart(sites_filter).mark_circle(
+        size=100,
+        color='red'
+    ).encode(
+        x = alt.X('lat:Q', scale=alt.Scale(domain=[-100, 100]), axis=None),
+        y = alt.Y('long:Q', scale=alt.Scale(domain=[-100, 100]), axis=None),
+        tooltip = ['site']
+    )
+
+    chart = (background + points)
+
+    return chart.to_html()
 
 @app.callback(
     Output('plot1', 'srcDoc'),
