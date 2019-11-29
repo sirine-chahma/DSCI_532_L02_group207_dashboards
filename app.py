@@ -368,6 +368,7 @@ def make_yield_per_site_per_variety(year, site, variety):
 
 _layout = html.Div([_sidebar_left,_body])
 
+app.layout = _layout
+
 if __name__ == "__main__":
-    app.layout = _layout
     app.run_server(debug=True)
