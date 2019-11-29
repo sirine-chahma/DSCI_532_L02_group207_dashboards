@@ -4,11 +4,14 @@ import dash_bootstrap_components as dbc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 import altair as alt
-import vega_datasets
-import wrangle as wr
+from src import wrangle as wr
+
+from vega_datasets import data
 
 app = dash.Dash(__name__, assets_folder='assets', external_stylesheets=[dbc.themes.BOOTSTRAP])
 server = app.server
+barley_df = data.barley()
+
 
 app.config['suppress_callback_exceptions'] = True
 app.title = 'Dash app with pure Altair HTML'
@@ -58,9 +61,9 @@ _sidebar_left = dbc.Container(
         dcc.Dropdown(
             id='site_selector',
             options=[
-                {'label': site, 'value': site} for site in wr.barley_df['site'].unique()
+                {'label': site, 'value': site} for site in barley_df['site'].unique()
             ],
-            value=wr.barley_df['site'].unique(),
+            value=barley_df['site'].unique(),
             className="display-10",
             multi=True,
             style={
@@ -72,9 +75,9 @@ _sidebar_left = dbc.Container(
         dcc.Dropdown(
             id='variety_selector',
             options=[
-                {'label': variety, 'value': variety} for variety in wr.barley_df['variety'].unique()
+                {'label': variety, 'value': variety} for variety in barley_df['variety'].unique()
             ],
-            value=wr.barley_df['variety'].unique(),
+            value=barley_df['variety'].unique(),
             multi=True,
             style={
                 "color": 'black'
@@ -172,7 +175,7 @@ def make_yield_per_var(year, site, variety):
         variety_temp = variety
 
     #filter the year
-    df_temp = wr.barley_df[wr.barley_df['year'].isin(year_temp)]
+    df_temp = barley_df[barley_df['year'].isin(year_temp)]
     #filter the site
     df_temp = df_temp[df_temp['site'].isin(site_temp)]
     #filter the variety
@@ -221,7 +224,7 @@ def make_yield_per_site(year, site, variety):
         variety_temp = variety
 
     #filter the year
-    df_temp = wr.barley_df[wr.barley_df['year'].isin(year_temp)]
+    df_temp = barley_df[barley_df['year'].isin(year_temp)]
 
     #filter the site
     df_temp = df_temp[df_temp['site'].isin(site_temp)]
@@ -272,7 +275,7 @@ def make_yield_per_site_per_variety(year, site, variety):
         variety_temp = variety
     
     #filter the year
-    df_temp = wr.barley_df[wr.barley_df['year'].isin(year_temp)]
+    df_temp = barley_df[barley_df['year'].isin(year_temp)]
 
     #filter the variety
     df_temp = df_temp[df_temp['variety'].isin(variety_temp)]
