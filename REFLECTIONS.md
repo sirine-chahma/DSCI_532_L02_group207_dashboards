@@ -1,3 +1,5 @@
+## Reflections on BaRley: Group 207
+
 - The BaRley dashboard allows any farmer interested in the area to easily determine the relationship between different features of barley, like yield and geographic location, with respect to expected yield for the state of Minnesota.
 - The BaRley app contains a wide variety of filters that allows the farmer to analyze particular varieties and/or sites in closer detail if they so choose, giving them the flexibility to view what they would like.
 - Finally, if the farmer wishes to gauge how the yield might be expected to vary, the year filter allows them to at least get an estimate of how the yield may change over time. At the very least, it displays the entire data set in its entirety so the user can come to their own conclusions as to whether the yields displayed are trustworthy.
