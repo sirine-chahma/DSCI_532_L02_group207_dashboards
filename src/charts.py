@@ -18,4 +18,3 @@ def make_plot(data=wr.barley_df, x_axis='variety', y_axis = 'yield', x_type = 'n
             ).properties(title=title, width=400, height=300).interactive()
 
     return chart
-

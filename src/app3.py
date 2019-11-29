@@ -1,49 +1,95 @@
-import dash
-import dash_core_components as dcc
 import dash_bootstrap_components as dbc
+import dash_core_components as dcc
 import dash_html_components as html
-from dash.dependencies import Input, Output
-import altair as alt
-import vega_datasets
+from dash import Dash
+import dash
+import charts as ch
 import wrangle as wr
+import altair as alt
+from dash.dependencies import Input, Output
 
-app = dash.Dash(__name__, assets_folder='assets', external_stylesheets=[dbc.themes.BOOTSTRAP])
+
+
+app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 server = app.server
+app.config.suppress_callback_exceptions = True
 
-app.config['suppress_callback_exceptions'] = True
-app.title = 'Dash app with pure Altair HTML'
+# custom navbar based on https://getbootstrap.com/docs/4.1/examples/dashboard/
+_dashboard = dbc.Navbar(
+    sticky="top",
+    children=[
+        dbc.Col(dbc.NavbarBrand("BaRley", href="#"), sm=3, md=2),
+        #dbc.Col(dbc.Input(type="search", placeholder="Search here")),
+        dbc.Col(),
+        dbc.Col(
+            dbc.Nav(dbc.NavItem(dbc.NavLink("Sign out")), navbar=True),
+            width="auto",
+        ),
+    ],
+    color="dark",
+    dark=True,
+)
 
+
+# the style arguments for the sidebar. We use position:fixed and a fixed width
 SIDEBAR_STYLE_LEFT = {
     "position": "fixed",
     "top": 0,
     "left": 0,
     "bottom": 0,
-    "width": "300px",
+    "width": "15rem",
     "padding": "2rem 1rem",
-    "height": "100%",
     #"background-color": "#f8f9fa",
     "background-color": '#343A40', 
     "color": 'white',
-    "overflow": "auto"
 }
 
-BODY = {
-  "margin-left": "300px",
-  "padding": "100px 16px",
-  "height": "100%",
+# the style arguments for the sidebar. We use position:fixed and a fixed width
+SIDEBAR_STYLE_RIGHT = {
+    "position": "auto",
+    "top": 0,
+    "right": 0,
+    "bottom": 0,
+    # "width": "12rem",
+    "width": "auto",
+    "padding": "2rem 1rem",
+    #"background-color": "#f8f9fa",
+    "background-color": '#343A40', 
+    "color": 'white',
+}
+
+BODY_STYLE = {
+   "background-color": '#cccdcf', 
+}
+
+# the styles for the main content position it to the right of the sidebar and
+# add some padding.
+CONTENT_STYLE = {
+    "margin-left": "18rem",
+    "margin-right": "2rem",
+    "padding": "2rem 1rem",
 }
 
 _sidebar_left = dbc.Container(
     [
-        html.Br(),
-        html.Br(),
         
+<<<<<<< HEAD
         html.H2("Barley Yield", className="display-10"),
         html.P(
             "Choose the filters to see the visualization change", className="lead"
         ),
         html.H6("Year:"),
         dcc.RadioItems(
+=======
+        
+        html.H4("Barley Yield", className="display-10"),
+        html.Br(),
+        # html.P(
+        #     "Choose the filters to see the visualization change", className="lead"
+        # ),
+        html.H5("Year:"),
+        dcc.Dropdown(
+>>>>>>> upstream/master
             id='year_selector',
             options=[
                 {'label': '1931', 'value': '1931'},
@@ -51,10 +97,19 @@ _sidebar_left = dbc.Container(
                 {'label': 'All', 'value': 'both'}
             ],
             value='both',
+<<<<<<< HEAD
             className="display-10"
         ),
         html.Hr(),
         html.H5("Site:"),
+=======
+            style={
+                "color": 'black'
+            },
+            className="display-10"
+        ),
+        html.H5("Site:", className="lead"),
+>>>>>>> upstream/master
         dcc.Dropdown(
             id='site_selector',
             options=[
@@ -67,8 +122,13 @@ _sidebar_left = dbc.Container(
                 "color": 'black'
             },
         ),
+<<<<<<< HEAD
         html.Hr(),
         html.H6("Variety:"),
+=======
+        html.Br(),
+        html.H5("Variety:"),
+>>>>>>> upstream/master
         dcc.Dropdown(
             id='variety_selector',
             options=[
@@ -85,6 +145,18 @@ _sidebar_left = dbc.Container(
     style=SIDEBAR_STYLE_LEFT,
 )
 
+_sidebar_right = dbc.Container( #html.Div(
+    [
+        html.Br(),
+        html.Br(),
+        
+        html.Center(html.H2("Legend", className="display-8")),
+        html.Hr(),
+        html.Hr()
+    ],
+    style=SIDEBAR_STYLE_RIGHT,
+    fluid = True,
+)
 
 _body = dbc.Container(
     [
@@ -92,31 +164,63 @@ _body = dbc.Container(
             [
                 dbc.Col(
                     [
+                        html.H2("")
+                    ],
+                    md=2
+                ),
+                dbc.Col(
+                    [
                         html.Center(html.H2("Yield per Variety")),
                         html.Iframe(
                             sandbox='allow-scripts',
                             id='plot1',
+<<<<<<< HEAD
                             height='500',
                             width='500',
+                            #height='',
+                            #width='',
+                            style={
+                                'border-width': '0', 
+                                #"padding": "12rem",
+                            },
+=======
+                            height='400',
+                            width='400',
                             style={'border-width': '0'},
+>>>>>>> upstream/master
+                            ################ The magic happens here
+                            #srcDoc=open('./Lecture1_charts/horsepower_vs_displacement.html').read()
+                            #srcDoc=ch.make_plot().to_html()
+                            #srcDoc= ch.make_plot().to_html()
+                            ################ The magic happens here
                         ),                  
                     ],
-                    md=6,
+                    md=5,
                 ),
+                
                 dbc.Col(
                     [
                         html.Center(html.H2("Yield per Site")),
                         html.Iframe(
                             sandbox='allow-scripts',
                             id='plot2',
-                            height='500',
-                            width='500',
+                            height='400',
+                            width='400',
                             style={'border-width': '0'},
+                            ################ The magic happens here
+                            #srcDoc=open('./Lecture1_charts/horsepower_vs_displacement.html').read()
+                            srcDoc=ch.make_plot().to_html()
+                            ################ The magic happens here
                         ),                  
                     ],
-                    md=6
+<<<<<<< HEAD
+                    md=5,
+=======
+                    md=5
+>>>>>>> upstream/master
                 ),
-            ]
+            ],
+            align="center"
         ),
         html.Br(),
         html.Br(),
@@ -127,26 +231,68 @@ _body = dbc.Container(
         dbc.Row(
             [
                 dbc.Col(
+                    [      
+                        html.H2("")                 
+                    ],
+                    md=2
+                ),                
+                dbc.Col(
+                    [
+                        html.H2("")
+                    ],
+                    md=2
+                ),
+                dbc.Col(
                     [
                         html.Center(html.H2("Yields for the selected varieties for the selected sites")),
                         html.Iframe(
                             sandbox='allow-scripts',
                             id='plot3',
-                            height='600',
-                            width='1200',
+                            height='1000',
+                            width='1000',
                             style={'border-width': '0'},
+                            ################ The magic happens here
+                            #srcDoc=open('./Lecture1_charts/horsepower_vs_displacement.html').read()
+                            srcDoc=ch.make_plot().to_html()
+                            ################ The magic happens here
                         ),              
                         
                     ],
-                    md=12
+<<<<<<< HEAD
+                    md=1
+=======
+                    md=10
+>>>>>>> upstream/master
                 ),
             ]
 
         )
     ],
     className="mt-4",
-    style=BODY
+    
 )
+
+#_layout = html.Div([_dashboard, _sidebar_left, _body, _sidebar_right])
+
+_layout = html.Div([_sidebar_left, _body])
+
+class DemoLayoutPage:
+    def for_path(self, component):
+        return _layout
+
+
+# @app.callback(
+#     dash.dependencies.Output('plot1', 'srcDoc'),
+#     [dash.dependencies.Input('year_selector', 'value'),
+#     dash.dependencies.Input('variety_selector', 'value'),
+#     dash.dependencies.Input('site_selector', 'value')])
+# def update_plot(years, varieties, sites):
+#     print(years)
+#     print(varieties)
+#     print(sites)
+#     plot = ch.make_plot()
+#     return plot
+
 
 @app.callback(
     Output('plot1', 'srcDoc'),
@@ -188,7 +334,7 @@ def make_yield_per_var(year, site, variety):
             title = "Yield (kg/hectare)"),
         alt.Color("year:N", legend=alt.Legend(title="Year")),
         tooltip=['site', 'year', 'yield', 'variety']
-        ).properties(width = 320, height=300
+        ).properties(width = 350, height=300
         ).configure_title(fontSize=18
         ).configure_axis(
             labelFontSize=10, 
@@ -239,7 +385,7 @@ def make_yield_per_site(year, site, variety):
             title = "Yield (kg/hectare)"),
         alt.Color("year:N", legend=alt.Legend(title="Year")),
         tooltip=['site', 'year', 'yield', 'variety']
-    ).properties(width = 320, height=300
+    ).properties(width = 350, height=300
     ).configure_title(fontSize=18
     ).configure_axis(
         labelFontSize=11, 
@@ -309,7 +455,7 @@ def make_yield_per_site_per_variety(year, site, variety):
                 alt.value('red'),     
                 alt.value('grey')),
             tooltip=['site', 'yield', 'variety']
-            ).properties(width = 230, height=230).interactive()
+            ).properties(width = 200, height=230).interactive()
 
             #add this chart to the list that contains all the charts
             my_graphs.append(chart)
@@ -363,9 +509,11 @@ def make_yield_per_site_per_variety(year, site, variety):
 
     return my_chart.to_html()
 
-
-_layout = html.Div([_sidebar_left,_body])
-
 if __name__ == "__main__":
     app.layout = _layout
     app.run_server(debug=True)
+
+
+
+
+
