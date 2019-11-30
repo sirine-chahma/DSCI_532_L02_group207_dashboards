@@ -7,6 +7,10 @@ The app contains a landing page that displays the annual yield of barley for a r
  
  <img src="./img/app_sketch.png" alt="App Sketch" style="float: left; margin-right: 10px;" />
 
+ #### App Functionality
+
+Select the sites, the varieties and the year(s) on which you want to have some information. The app will automatically update.
+The points on the map will represent the position of the different sites. You can use your mouse and put it over each point to see which site it represents. If you go down on the page, you'll see the 3 graphs described above. Each graph is interactive: you can zoom out on it to see the values more precisely. If you put your mouse over one bar of a graph, you'll see the site, the variety, the year and the yield corresponding to this bar. If you decided to select both years, the values of the yield displayed on the graph that represents the yields for the selected varieties for the selected sites is the sum of the yields of the two years.
 
 
 
