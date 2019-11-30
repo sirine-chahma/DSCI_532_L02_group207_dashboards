@@ -13,6 +13,7 @@ The app contains a landing page that displays the annual yield of barley for a r
 ## Milestone II:
 
 ###### [Barley App](https://barley-app.herokuapp.com/)
+###### [Reflections](https://github.com/UBC-MDS/DSCI_532_L02_group207_dashboards/blob/master/REFLECTIONS.md)
 
 #### App Description 
 
