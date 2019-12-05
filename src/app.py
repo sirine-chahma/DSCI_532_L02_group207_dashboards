@@ -51,7 +51,7 @@ _sidebar_left = dbc.Container(
             options=[
                 {'label': '1931', 'value': '1931'},
                 {'label': '1932', 'value': '1932'},
-                {'label': 'All', 'value': 'both'}
+                {'label': 'Both', 'value': 'both'}
             ],
             value='both',
             className="display-10"
@@ -96,7 +96,7 @@ _body = dbc.Container(
                 dbc.Col([],md=3),
                 dbc.Col(
                     [
-                        html.Center(html.H2("Location of Sites Selected")),
+                        html.Center(html.H2("Map of the locations of the selected sites")),
                         html.Iframe(
                             sandbox='allow-scripts',
                             id='map',
@@ -240,7 +240,6 @@ def make_yield_per_var(year, site, variety):
     chart = alt.Chart(df_temp).mark_bar().encode(
         alt.X("variety:N", 
             title="Variety",
-            sort=alt.EncodingSortField(field="yield", op="sum", order='ascending'),
             axis = alt.Axis(labelAngle=45)),
         alt.Y("yield:Q",
             title = "Yield (kg/hectare)"),
@@ -249,8 +248,8 @@ def make_yield_per_var(year, site, variety):
         ).properties(width = 320, height=300
         ).configure_title(fontSize=18
         ).configure_axis(
-            labelFontSize=10, 
-            titleFontSize=13).interactive()
+            labelFontSize=14, 
+            titleFontSize=18)
 
     return chart.to_html()
 
@@ -300,8 +299,8 @@ def make_yield_per_site(year, site, variety):
     ).properties(width = 320, height=300
     ).configure_title(fontSize=18
     ).configure_axis(
-        labelFontSize=11, 
-        titleFontSize=13).interactive()
+        labelFontSize=14, 
+        titleFontSize=18)
     
     return chart.to_html()
 
@@ -352,12 +351,11 @@ def make_yield_per_site_per_variety(year, site, variety):
             #my_max is the variety that had the highest yield
 
             my_max = df_max['variety'][0]
-
+                    
             #create the bar graph
             chart = alt.Chart(df_max).mark_bar().encode(
             alt.Y("variety:N", 
                 title= sites,
-                sort=alt.EncodingSortField(field="yield", op="sum", order='ascending'),
                 axis = alt.Axis(labelAngle=0)),
             alt.X("yield:Q",
                 title = "Yield (kg/hectare)"),
@@ -367,7 +365,7 @@ def make_yield_per_site_per_variety(year, site, variety):
                 alt.value('red'),     
                 alt.value('grey')),
             tooltip=['site', 'yield', 'variety']
-            ).properties(width = 230, height=230).interactive()
+            ).properties(width = 230, height=230)
 
             #add this chart to the list that contains all the charts
             my_graphs.append(chart)
@@ -377,44 +375,44 @@ def make_yield_per_site_per_variety(year, site, variety):
         my_chart = my_graphs[0]
         my_chart = my_chart.configure_title(fontSize=18
         ).configure_axis(   
-        labelFontSize=10, 
-        titleFontSize=12
+        labelFontSize=14, 
+        titleFontSize=18
         ).configure_title(fontSize=25)
     elif len(my_graphs) == 2:
         my_chart = alt.hconcat(my_graphs[0], my_graphs[1]).configure_title(fontSize=18
         ).configure_axis(
-        labelFontSize=10, 
-        titleFontSize=12
+        labelFontSize=14, 
+        titleFontSize=18
         )
     elif len(my_graphs) == 3:
         my_chart = alt.hconcat(my_graphs[0], my_graphs[1], my_graphs[2]).configure_title(fontSize=18
         ).configure_axis(
-        labelFontSize=10, 
-        titleFontSize=12
+        labelFontSize=14, 
+        titleFontSize=18
         )
     elif len(my_graphs) == 4:
         my_chart = alt.vconcat(alt.hconcat(my_graphs[0], my_graphs[1]), 
                               alt.hconcat(my_graphs[2], my_graphs[3])
         ).configure_title(fontSize=18
         ).configure_axis(
-        labelFontSize=10, 
-        titleFontSize=12
+        labelFontSize=14, 
+        titleFontSize=18
         )
     elif len(my_graphs) == 5:
         my_chart = alt.vconcat(alt.hconcat(my_graphs[0], my_graphs[1], my_graphs[2]), 
                               alt.hconcat(my_graphs[3], my_graphs[4])
         ).configure_title(fontSize=18
         ).configure_axis(
-        labelFontSize=10, 
-        titleFontSize=12
+        labelFontSize=14, 
+        titleFontSize=18
         )
     elif len(my_graphs) == 6:
         my_chart = alt.vconcat(alt.hconcat(my_graphs[0], my_graphs[1], my_graphs[2]), 
                               alt.hconcat(my_graphs[3], my_graphs[4], my_graphs[5])
         ).configure_title(fontSize=18
         ).configure_axis(
-        labelFontSize=10, 
-        titleFontSize=12
+        labelFontSize=14, 
+        titleFontSize=18
         )
     else : 
         my_chart = alt.Chart(df_temp).mark_bar()
