@@ -39,7 +39,6 @@ BODY = {
 _sidebar_left = dbc.Container(
     [
         html.Br(),
-        html.Br(),
         
         html.H2("Barley Yield", className="display-10"),
         html.P(
@@ -83,19 +82,53 @@ _sidebar_left = dbc.Container(
                 "color": 'black'
             },
         ),
-        html.Hr()
+        html.Hr(),
+        html.P(
+            "More information about the dataset :", className="lead"
+        ),
+        html.P(
+            "We chose the barley dataset from the vega-datasets python package. This dataset shows the yields of 10 different varieties of barley at 6 different sites in Minnesota during the years 1931 and 1932. It first appeared in the 1934 paper 'Statistical Determination of Barley Varietal Adaption' by the three agronomists who led this experiment: F.R. Immer, H.K. Hayes, and L. Powers.", className="lead"
+        ),
+        html.P(
+            "The 10 varieties studied are : Velvet, Trebi, No. 457, No. 462, Peatland, No. 475, Manchuria, Glabron, Svansota, and Wisconsin No 38.", className="lead"
+        ),
+         html.P(
+            "The 6 sites studied are : University Farm, Waseca, Morris, Crookston, Grand Rapids, and Duluth.", className="lead"
+        )
     ],
     style=SIDEBAR_STYLE_LEFT,
 )
 
 
 _body = dbc.Container(
-    [
+    [   dbc.Row(
+            [dbc.Col(
+                    [   html.P(
+                            "Barley is part of the major cereal grains used worldwide. Understanding how the annual yield of barley is impacted by the variety or site on which it grows is very important. This dashboard has been created to allow you to explore a dataset containing the annual yield for selected varieties of barley and particular sites, for the years 1931, 1932, or both. It should help you better understand what variety or what site is the most suitable to your situation. If you are wondering:", className="lead"), 
+                        html.P(
+                            '-Given some sites and some varieties, what variety of barley had the highest yield during a specific year?', className="lead"),
+                        html.P(
+                            '-Given some sites and some varieties, what site had the highest yield during a specific year?', className="lead"),
+                        html.P(
+                            '-Given some sites and some varieties, what is the variety of barley with the highest yield for each of the sites?', className="lead"),
+                        html.P(
+                            "then this app is exactly what you need! Now, you have no excuse to increase your productivity and have the highest yield as possible! ", className="lead"
+                        ),
+                        html.P(
+                            "Trick : Place your mouse above the different bars to display more information!", className="lead"
+                        )
+                    ],
+                    md=11,
+                )
+            ]
+        ),
+        html.Br(),
+        html.Br(),
         dbc.Row(
             [
-                dbc.Col([],md=3),
+                dbc.Col([],md=2),
                 dbc.Col(
-                    [
+                    [   
                         html.Center(html.H2("Map of the locations of the selected sites")),
                         html.Iframe(
                             sandbox='allow-scripts',
@@ -107,13 +140,22 @@ _body = dbc.Container(
                     ],
                     md=6,
                 ),
-                dbc.Col([],md=3),
+                dbc.Col(
+                    [html.Br(),
+                    html.Br(),
+                    html.P(
+                        "All the sites under study are located in the same state : Minnesota. To help you visualize more easily were all the sites are, this is a map representing the state of Minnesota and highlighting the location of the different sites with a red dot. Place your mouse above one of the points to see which site it represents.", className="lead")
+                    ]
+                    ,md=3),
             ]
         ),
+        html.Br(),
+        html.Br(),
         dbc.Row(
             [
                 dbc.Col(
-                    [
+                    [   
+                        html.P("The following graph allows you to observe the total yield for the selected year(s), for each variety.", className="lead"),
                         html.Center(html.H2("Yield per Variety")),
                         html.Iframe(
                             sandbox='allow-scripts',
@@ -127,6 +169,7 @@ _body = dbc.Container(
                 ),
                 dbc.Col(
                     [
+                        html.P("The following graph allows you to observe the total yield for the selected year(s), for each site.", className="lead"),
                         html.Center(html.H2("Yield per Site")),
                         html.Iframe(
                             sandbox='allow-scripts',
@@ -146,8 +189,8 @@ _body = dbc.Container(
             [
                 dbc.Col(
                     [
+                        html.P("The following graph allows you to observe the total yield per variey for the selected year(s), for each site. The maximum yield is represented in red.", className="lead"),
                         html.Center(html.H2("Yields for the selected varieties for the selected sites")),
-                        html.Center(html.P("Max yield is represented by red", className="lead")),
                         html.Iframe(
                             sandbox='allow-scripts',
                             id='plot3',
