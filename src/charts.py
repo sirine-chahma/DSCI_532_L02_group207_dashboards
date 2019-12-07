@@ -1,7 +1,7 @@
 import altair as alt
 from vega_datasets import data
 import pandas as pd
-import wrangle as wr
+from src import wrangle as wr
 
 def make_map(site):
 
