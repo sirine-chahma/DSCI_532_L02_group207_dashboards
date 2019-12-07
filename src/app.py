@@ -7,38 +7,17 @@ import altair as alt
 import pandas as pd
 import charts as ch
 import wrangle as wr
+import themes as th
 
 from vega_datasets import data
 
 app = dash.Dash(__name__, assets_folder='assets', external_stylesheets=[dbc.themes.BOOTSTRAP])
 server = app.server
 
-
 app.config['suppress_callback_exceptions'] = True
 app.title = 'Dash app with pure Altair HTML'
 
-SIDEBAR_STYLE_LEFT = {
-    "position": "fixed",
-    "top": 0,
-    "left": 0,
-    "bottom": 0,
-    "width": "300px",
-    "padding": "2rem 1rem",
-    "height": "100%",
-    #"background-color": "#f8f9fa",
-    "background-color": '#343A40', 
-    "color": 'white',
-    "overflow": "auto"
-}
-
-BODY = {
-  "margin-left": "300px",
-  "padding": "0px 16px",
-  "height": "100%",
-}
-
-
-jumbotron = dbc.Jumbotron(
+_jumbotron = dbc.Jumbotron(
     [
         html.H1("Barley App", className="display-3"),
         html.Hr(className="my-2"),
@@ -141,7 +120,8 @@ _sidebar_left = dbc.Container(
         html.Hr(),
         data_details,        
     ],
-    style=SIDEBAR_STYLE_LEFT,
+    #style=SIDEBAR_STYLE_LEFT,
+    style=th.SIDEBAR_STYLE_LEFT,
 )
 
 
@@ -150,7 +130,7 @@ _body = dbc.Container(
             [
                 dbc.Col(
                     [
-                        jumbotron,    
+                        _jumbotron,    
                     ]
                 )
             ]
@@ -282,7 +262,7 @@ _body = dbc.Container(
         )
     ],
     className="mt-4",
-    style=BODY
+    style=th.BODY,
 )
 
 @app.callback(

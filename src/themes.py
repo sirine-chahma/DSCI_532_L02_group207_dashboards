@@ -14,6 +14,6 @@ SIDEBAR_STYLE_LEFT = {
 
 BODY = {
   "margin-left": "300px",
-  "padding": "100px 16px",
+  "padding": "0px 16px",
   "height": "100%",
 }

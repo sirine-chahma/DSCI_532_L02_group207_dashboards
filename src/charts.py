@@ -1,17 +1,15 @@
 import altair as alt
 from vega_datasets import data
 import pandas as pd
+import wrangle as wr
 
 def make_map(site):
-    
-    barley_df = data.barley()
 
     if not isinstance(site, list):
         site_temp = list(site)
     else:
         site_temp = site
 
-    #states = alt.topo_feature(vega_datasets.data.us_10m.url, feature='states')
     states = alt.topo_feature(data.us_10m.url, feature='states')
     background = alt.Chart(states).mark_geoshape(
         fill='lightgray',
@@ -21,7 +19,7 @@ def make_map(site):
         height=300
     ).transform_filter((alt.datum.id == 27))
 
-    sites = pd.DataFrame({'site': barley_df['site'].unique().tolist(),
+    sites = pd.DataFrame({'site': wr.barley_df['site'].unique().tolist(),
                       'lat': [10, 0, -38, -43, 10, 18],
                       'long': [-40, -70, -30, 50, 30, 10]})
 
@@ -42,32 +40,8 @@ def make_map(site):
 
 def make_yield_per_var(year, site, variety):
 
+    df_temp = wr.sanitize(year, site, variety)
     
-    barley_df = data.barley()
-    if year == 'both':
-        year_temp = [1931, 1932]
-    else:
-        year_temp = [year]
-
-    #create a list with the selected site(s)
-    if not isinstance(site, list):
-        site_temp = list(site)
-    else:
-        site_temp = site
-    
-    #create a list with the selected varieties
-    if not isinstance(variety, list):
-        variety_temp = list(variety)
-    else:
-        variety_temp = variety
-
-    #filter the year
-    df_temp = barley_df[barley_df['year'].isin(year_temp)]
-    #filter the site
-    df_temp = df_temp[df_temp['site'].isin(site_temp)]
-    #filter the variety
-    df_temp = df_temp[df_temp['variety'].isin(variety_temp)]
-
     #create the bar graph
     chart = alt.Chart(df_temp).mark_bar().encode(
         alt.X("variety:N", 
@@ -87,36 +61,8 @@ def make_yield_per_var(year, site, variety):
 
 def make_yield_per_site(year, site, variety):
 
+    df_temp = wr.sanitize(year, site, variety)
     
-    barley_df = data.barley()
-
-    #create a list with the selected year(s)
-    if year == 'both':
-        year_temp = [1931, 1932]
-    else:
-        year_temp = [year]
-
-    #create a list with the selected site(s)
-    if not isinstance(site, list):
-        site_temp = list(site)
-    else:
-        site_temp = site
-    
-    #create a list with the selected varieties
-    if not isinstance(variety, list):
-        variety_temp = list(variety)
-    else:
-        variety_temp = variety
-
-    #filter the year
-    df_temp = barley_df[barley_df['year'].isin(year_temp)]
-
-    #filter the site
-    df_temp = df_temp[df_temp['site'].isin(site_temp)]
-
-    #filter the variety
-    df_temp = df_temp[df_temp['variety'].isin(variety_temp)]
-
     #create the bar graph
     chart = alt.Chart(df_temp).mark_bar().encode(
         alt.X("site:N", 
@@ -137,33 +83,14 @@ def make_yield_per_site(year, site, variety):
 
 def make_yield_per_site_per_variety(year, site, variety):
 
+    df_temp = wr.sanitize(year=year, variety=variety)
     
-    barley_df = data.barley()
-
-    #create a list with the selected year(s)
-    if year == 'both':
-        year_temp = [1931, 1932]
-    else:
-        year_temp = [year]
-
     #create a list with the selected site(s)
     if not isinstance(site, list):
         site_temp = list(site)
     else:
         site_temp = site
-
-    #create a list with the selected varieties
-    if not isinstance(variety, list):
-        variety_temp = list(variety)
-    else:
-        variety_temp = variety
-    
-    #filter the year
-    df_temp = barley_df[barley_df['year'].isin(year_temp)]
-
-    #filter the variety
-    df_temp = df_temp[df_temp['variety'].isin(variety_temp)]
-
+        
     #my_graphs is a list that will contain all the different bar graphs that will be faceted
     my_graphs = []
 
