@@ -277,6 +277,7 @@ _body = dbc.Container(
     Output('map', 'srcDoc'),
     [Input('site_selector', 'value')])
 def update_map(site):
+<<<<<<< HEAD
     """
     Updates the map based off the site selected in the toolbar.
 
@@ -292,6 +293,8 @@ def update_map(site):
     update_map(["Grand Rapids"])
     
     """
+=======
+>>>>>>> upstream/master
     return ch.make_map(site)
 
 @app.callback(
@@ -299,6 +302,7 @@ def update_map(site):
     [Input('year_selector', 'value'), Input('site_selector', 'value'), Input('variety_selector', 'value')])
 #create the plot of the yield per variety
 def update_yield_per_var(year, site, variety):
+<<<<<<< HEAD
 
     """
     Updates the bar chart depicting the yield per variety, based off the toolbar selections.
@@ -320,6 +324,8 @@ def update_yield_per_var(year, site, variety):
     
     """
 
+=======
+>>>>>>> upstream/master
     return ch.make_yield_per_var(year, site, variety)
 
 @app.callback(
@@ -327,6 +333,7 @@ def update_yield_per_var(year, site, variety):
     [Input('year_selector', 'value'), Input('site_selector', 'value'), Input('variety_selector', 'value')])
 #create the plot of the yield per site
 def update_yield_per_site(year, site, variety):
+<<<<<<< HEAD
 
     """
     Updates the bar chart depicting the yield per site, based off the toolbar selections. 
@@ -348,6 +355,8 @@ def update_yield_per_site(year, site, variety):
     
     """
 
+=======
+>>>>>>> upstream/master
     return ch.make_yield_per_site(year, site, variety)
 
 @app.callback(
@@ -355,6 +364,7 @@ def update_yield_per_site(year, site, variety):
     [Input('year_selector', 'value'), Input('site_selector', 'value'), Input('variety_selector', 'value')])
 #create the faceted chart of the yield per variety for every site
 def update_yield_per_site_per_variety(year, site, variety):
+<<<<<<< HEAD
     """
     Updates the bar chart depicting the yield per site per variety,
      based off the toolbar selections. This is a more detailed graph of what is displayed by 
@@ -379,6 +389,8 @@ def update_yield_per_site_per_variety(year, site, variety):
     """
 
 
+=======
+>>>>>>> upstream/master
     return ch.make_yield_per_site_per_variety(year, site, variety)
    
 

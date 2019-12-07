@@ -6,6 +6,7 @@ barley_df = data.barley()
 
 
 def sanitize(year=None, site=None, variety=None):
+<<<<<<< HEAD
 
     """
     A helper function that filters the data frame depending on what is selected in the toolbar.
@@ -28,6 +29,8 @@ def sanitize(year=None, site=None, variety=None):
     """
 
 
+=======
+>>>>>>> upstream/master
     if year == 'both':
         year_temp = [1931, 1932]
     else:
