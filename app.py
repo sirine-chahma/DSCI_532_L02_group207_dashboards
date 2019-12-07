@@ -50,8 +50,8 @@ data_details = html.Div(
             dbc.Card(
                 dbc.CardBody([
                     "We chose the barley dataset from the vega-datasets python package. This dataset shows the yields of 10 different varieties of barley at 6 different sites in Minnesota during the years 1931 and 1932. It first appeared in the 1934 paper 'Statistical Determination of Barley Varietal Adaption' by the three agronomists who led this experiment: F.R. Immer, H.K. Hayes, and L. Powers."
-                    , "The 10 varieties studied are: Velvet, Trebi, No. 457, No. 462, Peatland, No. 475, Manchuria, Glabron, Svansota, and Wisconsin No 38."
-                    , "The 6 sites studied are: University Farm, Waseca, Morris, Crookston, Grand Rapids, and Duluth."
+                    ,html.Br(), html.Br(), "The 10 varieties studied are: Velvet, Trebi, No. 457, No. 462, Peatland, No. 475, Manchuria, Glabron, Svansota, and Wisconsin No 38."
+                    ,html.Br(), html.Br(), "The 6 sites studied are: University Farm, Waseca, Morris, Crookston, Grand Rapids, and Duluth."
 
                 ])),
     
