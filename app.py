@@ -17,6 +17,8 @@ server = app.server
 app.config['suppress_callback_exceptions'] = True
 app.title = 'Dash app with pure Altair HTML'
 
+# Wrap the introductory text to be its own distinct element (a Jumbotron)
+
 _jumbotron = dbc.Jumbotron(
     [
         html.H1("Barley App", className="display-3"),
@@ -37,6 +39,8 @@ _jumbotron = dbc.Jumbotron(
         )
     ]
 )
+
+# Defines the collapsable button to provide more details on the dataset.
 
 data_details = html.Div(
     [
@@ -67,9 +71,12 @@ data_details = html.Div(
     [State("collapse", "is_open")],
 )
 def toggle_collapse(n, is_open):
+
     if n:
         return not is_open
     return is_open
+
+# Define the toolbar on the left side of the app.
 
 _sidebar_left = dbc.Container(
     [
@@ -124,6 +131,7 @@ _sidebar_left = dbc.Container(
     style=th.SIDEBAR_STYLE_LEFT,
 )
 
+# Define the body of the app (where the graphs are located)
 
 _body = dbc.Container(
     [   dbc.Row(
@@ -269,6 +277,21 @@ _body = dbc.Container(
     Output('map', 'srcDoc'),
     [Input('site_selector', 'value')])
 def update_map(site):
+    """
+    Updates the map based off the site selected in the toolbar.
+
+    Arguments:
+    site -- A list of objects of type str that provides the sites selected from the toolbar.
+        If the type is not list, the argument will be casted to a list first.
+
+    Returns:
+     altair object -- A graph of the map of Minnesota with the location of the sites selected by 
+        the user.
+
+    Examples:
+    update_map(["Grand Rapids"])
+    
+    """
     return ch.make_map(site)
 
 @app.callback(
@@ -276,6 +299,27 @@ def update_map(site):
     [Input('year_selector', 'value'), Input('site_selector', 'value'), Input('variety_selector', 'value')])
 #create the plot of the yield per variety
 def update_yield_per_var(year, site, variety):
+
+    """
+    Updates the bar chart depicting the yield per variety, based off the toolbar selections.
+
+    Arguments:
+    year -- A list of objects of type int that provides the years selected from the toolbar. The 
+     argument will first be casted to list if not given as a list initially.
+    site -- A list of objects of type str that provides the sites selected from the toolbar. The 
+     argument will first be casted to list if not given as a list initially.
+    variety -- A list of objects of type str that provides the varieties selected from the toolbar. The 
+     argument will first be casted to list if not given as a list initially.
+
+    Returns:
+     altair object -- A bar chart depicting the yield per variety for the selected years, sites, and
+      varieties as provided from the toolbar.
+
+    Examples:
+    update_yield_per_var([1931], ["Grand Rapids", "University Farm"], ["Manchuria"])
+    
+    """
+
     return ch.make_yield_per_var(year, site, variety)
 
 @app.callback(
@@ -283,6 +327,27 @@ def update_yield_per_var(year, site, variety):
     [Input('year_selector', 'value'), Input('site_selector', 'value'), Input('variety_selector', 'value')])
 #create the plot of the yield per site
 def update_yield_per_site(year, site, variety):
+
+    """
+    Updates the bar chart depicting the yield per site, based off the toolbar selections. 
+
+    Arguments:
+    year -- A list of objects of type int that provides the years selected from the toolbar. The 
+     argument will first be casted to list if not given as a list initially.
+    site -- A list of objects of type str that provides the sites selected from the toolbar. The 
+     argument will first be casted to list if not given as a list initially.
+    variety -- A list of objects of type str that provides the varieties selected from the toolbar. The 
+     argument will first be casted to list if not given as a list initially.
+
+    Returns:
+     altair object -- A bar chart depicting the yield per site for the selected years, sites, and
+      varieties as provided from the toolbar.
+
+    Examples:
+    update_yield_per_site([1931], ["Grand Rapids", "University Farm"], ["Manchuria"])
+    
+    """
+
     return ch.make_yield_per_site(year, site, variety)
 
 @app.callback(
@@ -290,6 +355,30 @@ def update_yield_per_site(year, site, variety):
     [Input('year_selector', 'value'), Input('site_selector', 'value'), Input('variety_selector', 'value')])
 #create the faceted chart of the yield per variety for every site
 def update_yield_per_site_per_variety(year, site, variety):
+    """
+    Updates the bar chart depicting the yield per site per variety,
+     based off the toolbar selections. This is a more detailed graph of what is displayed by 
+     the other two bar charts.
+
+    Arguments:
+    year -- A list of objects of type int that provides the years selected from the toolbar. The 
+     argument will first be casted to list if not given as a list initially.
+    site -- A list of objects of type str that provides the sites selected from the toolbar. The 
+     argument will first be casted to list if not given as a list initially.
+    variety -- A list of objects of type str that provides the varieties selected from the toolbar. The 
+     argument will first be casted to list if not given as a list initially.
+
+    Returns:
+     altair object -- A series of concatenated bar charts depicting 
+     the yield per site for the selected years and varieties as
+     provided from the toolbar.
+
+    Examples:
+    update_yield_per_site_per_variety([1931], ["Grand Rapids", "University Farm"], ["Manchuria"])
+    
+    """
+
+
     return ch.make_yield_per_site_per_variety(year, site, variety)
    
 

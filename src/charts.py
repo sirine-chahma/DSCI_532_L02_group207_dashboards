@@ -5,11 +5,30 @@ from src import wrangle as wr
 
 def make_map(site):
 
+    """
+    Creates the map of Minnesota based off the site selected from the toolbar. This is the 
+    required Altair code to produce the plot.
+
+    Arguments:
+    site -- A list of str objects that contains the sites selected in the toolbar. If the argument
+     is not given as a list, the argument will be casted to a list first.
+
+    Returns:
+    altair html chart -- A map of Minnesota created in Altair, converted to html that shows 
+     the location of the sites selected.
+
+    Examples:
+    make_map(["University Farm", "Grand Rapids"]) 
+
+    """
+
+    # Checks if the given argument is a list. If it isn't, only one site was selected.
     if not isinstance(site, list):
         site_temp = list(site)
     else:
         site_temp = site
 
+    # Filters for the state of Minnesota
     states = alt.topo_feature(data.us_10m.url, feature='states')
     background = alt.Chart(states).mark_geoshape(
         fill='lightgray',
@@ -25,6 +44,8 @@ def make_map(site):
 
     sites_filter = sites[sites['site'].isin(site_temp)]
 
+    # Layers points on top of the given map. The points are only rough
+    # approximations.
     points = alt.Chart(sites_filter).mark_circle(
         size=100,
         color='red'
@@ -40,6 +61,26 @@ def make_map(site):
 
 def make_yield_per_var(year, site, variety):
 
+    """
+    Creates the bar chart of yield per variety, based off what is selected in the toolbar.
+     This is the actual code in Altair required to create the plot.
+
+    Arguments:
+    year -- A list of int objects that contains the years selected in the toolbar. If the argument
+     is not given as a list, the argument will be casted to a list first.
+    site -- A list of str objects that contains the sites selected in the toolbar. If the argument
+     is not given as a list, the argument will be casted to a list first.
+    variety -- A list of str objects that contains the varieties selected in the toolbar. If the argument
+     is not given as a list, the argument will be casted to a list first.
+
+    Returns:
+    altair html chart -- A bar chart, converted to html that depicts the yield per
+     each unique variety, as selected in the toolbar.
+
+    Examples:
+    make_yield_per_var([1931], ["Grand Rapids"], ["Manchuria"]) 
+
+    """
     df_temp = wr.sanitize(year, site, variety)
     
     #create the bar graph
@@ -60,6 +101,27 @@ def make_yield_per_var(year, site, variety):
     return chart.to_html()
 
 def make_yield_per_site(year, site, variety):
+
+    """
+    Creates the bar chart of yield per site based off what is selected in the toolbar.
+     This is the actual code in Altair required to create the plot.
+
+    Arguments:
+    year -- A list of int objects that contains the years selected in the toolbar. If the argument
+     is not given as a list, the argument will be casted to a list first.
+    site -- A list of str objects that contains the sites selected in the toolbar. If the argument
+     is not given as a list, the argument will be casted to a list first.
+    variety -- A list of str objects that contains the varieties selected in the toolbar. If the argument
+     is not given as a list, the argument will be casted to a list first.
+
+    Returns:
+    altair html chart -- A bar chart, converted to html that depicts the yield per
+     each unique site, as selected in the toolbar.
+
+    Examples:
+    make_yield_per_site([1931], ["Grand Rapids"], ["Manchuria"]) 
+
+    """
 
     df_temp = wr.sanitize(year, site, variety)
     
@@ -82,6 +144,30 @@ def make_yield_per_site(year, site, variety):
     return chart.to_html()
 
 def make_yield_per_site_per_variety(year, site, variety):
+
+    """
+    Creates the concatenated bar chart of yield per site per variety based off what
+     is selected in the toolbar. This is the actual code in Altair
+     required to create the plot.
+
+    Arguments:
+    year -- A list of int objects that contains the years selected in the toolbar. If the argument
+     is not given as a list, the argument will be casted to a list first.
+    site -- A list of str objects that contains the sites selected in the toolbar. If the argument
+     is not given as a list, the argument will be casted to a list first.
+    variety -- A list of str objects that contains the varieties selected in the toolbar. If the argument
+     is not given as a list, the argument will be casted to a list first.
+
+    Returns:
+    altair html chart -- A concatenated bar chart, converted to html that depicts the yield per
+     variety per each unique site, as selected in the toolbar. The number of graphs shown 
+     will change depending on the quantity of sites selected.
+
+    Examples:
+    make_yield_per_site_per_variety([1931],
+     ["Grand Rapids", "University Farm"], ["Manchuria"]) 
+
+    """
 
     df_temp = wr.sanitize(year=year, variety=variety)
     

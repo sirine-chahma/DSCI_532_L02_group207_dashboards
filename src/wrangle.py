@@ -6,6 +6,28 @@ barley_df = data.barley()
 
 
 def sanitize(year=None, site=None, variety=None):
+
+    """
+    A helper function that filters the data frame depending on what is selected in the toolbar.
+
+    Arguments:
+    year -- A list of integers that provides the years for which the dataset will be filtered for.
+     Default = None.
+    site -- A list of strings that provides the sites for which the dataset will be filtered for. 
+     Default = None.
+    variety -- A list of strings that provides the sites for which the dataset will be filtered for.
+     Default = None.
+
+    Returns:
+    dataframe 
+     A Pandas dataframe object that contains the filtered dataset, to be used for graphing purposes.
+
+    Examples:
+    sanitize(["1931"], ["Grand Rapids"], ["Manchuria"])
+
+    """
+
+
     if year == 'both':
         year_temp = [1931, 1932]
     else:
